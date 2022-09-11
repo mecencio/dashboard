@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,11 +10,10 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Inicio</title>
 </head>
-
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-light">
-            <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg bg-light header">
+            <div class="container">
                 <a class="navbar-brand p-2">DOS Restó</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +34,7 @@
                             <a class="nav-link" href="pages/caja.html">Caja</a>
                         </li>
                     </ul>
-                    <a class="btn btn-outline-secondary" role="button" href="pages/login.html">Ingresa!</a>
+                    <a class="btn btn-outline-secondary" role="button" href="pages/login.html">Login</a>
                 </div>
             </div>
         </nav>
@@ -45,11 +43,39 @@
         <section class="inicio">
             <article class="inicio__opacidad" >
                 <div class="inicio__contenido">
-                    <h1>Bienvenidos/as a <span class="">DOS Restó</span></h1>
-                    <h2>Realizá tu pedido online en simples pasos!</h2>
-                    <a href="#">Arma tu pedido!</a>
+                    <h1>Bienvenido/a a <span class="">DOS Restó</span></h1>
+                    <a class="btn btn-outline-primary p-3" role="button" href="#form">INGRESA UN PEDIDO!</a>
                 </div>
             </article>
+        </section>
+        <section id="form" class="formulario container-fluid">
+            <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 formulario__caja">
+                <div class="mb-3">
+                    <label class="form-label">¿Desea cargar una bebida o una comida?</label>
+                    <input class="form-control" list="datalistOptions" placeholder="¿Comida o bebida?" required>
+                    <datalist id="datalistOptions">
+                        <option value="Comida">
+                        <option value="Bebida">
+                    </datalist>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Ingrese el nombre del plato o bebida: </label>
+                  <input type="text" class="form-control" placeholder="Nombre del plato" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Comentarios: </label>
+                    <textarea class="form-control" placeholder="Aqui puede ingresar detalles o cambios en el plato o bebida elegida"></textarea>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Ingrese su nombre</label>
+                  <input type="text" class="form-control" placeholder="John Doe" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ingrese el número de mesa: </label>
+                    <input type="text" class="form-control" placeholder="01" required>
+                </div>
+                <button type="submit" class="btn btn-primary p-2 position-relative top-50 start-50">Enviar</button>
+              </form>
         </section>
     </main>
     <footer>

@@ -26,6 +26,10 @@ a {
 
 /********** Inicio de formatos **********/
 
+.header {
+    background-color: lightyellow !important;
+}
+
 .inicio {
     background-image: url(../resources/fondo3.jpg);
     background-repeat: no-repeat;
@@ -51,4 +55,11 @@ a {
     padding: 0 1rem;
     color: white;
     text-align: center;
+}
+
+.formulario__caja {
+    background-color: #f3f4f6b9;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(29, 79, 216, 0.452);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
