@@ -39,20 +39,23 @@
     </header>
     <main>
         <section id="form" class="login container-fluid">
-            <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 login__form" method="post">
+            <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 login__form" method="POST">
                 <div class="mb-3">
                     <label class="form-label">Usuario: </label>
-                    <input type="text" class="form-control" placeholder="Usuario">
+                    <input type="text" class="form-control" placeholder="Usuario" id="user">
+                    <div id="errorUsuario"></div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Contraseña: </label>
-                    <input type="password" class="form-control" placeholder="Contraseña">
+                    <input type="password" class="form-control" placeholder="Contraseña" id="password">
+                    <div id="errorContra"></div>
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="submit" class="btn btn-outline-primary p-2">Ingresar</button>
+                    <button type="submit" class="btn btn-outline-primary p-2" id="botonLogin" disabled>Ingresar</button>
                 </div>
             </form>
         </section>
     </main>
+    <script src="../js/login.js"></script>
 </body>
 </html>
