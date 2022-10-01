@@ -45,7 +45,9 @@ if ($_SESSION['rol'] !== 'MOZO') {
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="index.php">Inicio</a>
                         </li>
-                        <li class="nav-item dropdown justify-content-end">
+                    </ul>
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle usuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Hola, <?php echo $_SESSION['nombre'];  ?>
                             </a>
@@ -99,7 +101,20 @@ if ($_SESSION['rol'] !== 'MOZO') {
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Ingrese el número de mesa: </label>
-                    <input type="text" class="form-control" placeholder="01">
+                    <select class="form-select">
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <button type="submit" class="btn btn-outline-primary p-2">Enviar</button>

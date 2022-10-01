@@ -54,8 +54,19 @@ a {
 }
 
 .usuario {
-    font-size: 1.2rem;
     color: #d19e78;
+    font-weight: bolder;
+}
+
+.usuario:hover {
+    color: #d19e78;
+    font-weight: bolder;
+}
+
+.dropdown-item:hover {
+    background-color: #d19f78;
+    color: white;
+    font-weight: bolder;
 }
 
 .inicio {

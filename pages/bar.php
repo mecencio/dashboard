@@ -45,7 +45,9 @@ if ($_SESSION['rol'] !== 'BARTENDER') {
                         <li class="nav-item">
                             <a class="nav-link active" href="bar.php">Bar</a>
                         </li>
-                        <li class="nav-item dropdown justify-content-end">
+                    </ul>
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle usuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Hola, <?php echo $_SESSION['nombre'];  ?>
                             </a>
