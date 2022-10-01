@@ -17,7 +17,7 @@ usuario.addEventListener("change", function(e) {
     const error = document.getElementById("errorUsuario");
     error.innerHTML = ""
 
-    if (soloAlfanumerico(usuario.value) && usuario.value.length > 6) {
+    if (soloAlfanumerico(usuario.value) && usuario.value.length >= 6) {
         okUsuario = true;
         if (okUsuario && okContra) {
             boton.removeAttribute("disabled");
@@ -47,7 +47,7 @@ contrasenia.addEventListener("change", function(e){
     const error = document.getElementById("errorContra");
     error.innerHTML = ""
 
-    if (contrasenia.value.length > 6) {
+    if (contrasenia.value.length >= 6) {
         okContra = true;
         if (okUsuario && okContra) {
             boton.removeAttribute("disabled");

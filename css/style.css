@@ -53,6 +53,11 @@ a {
     text-underline-offset: 4px;
 }
 
+.usuario {
+    font-size: 1.2rem;
+    color: #d19e78;
+}
+
 .inicio {
     background-image: url(../resources/fondo3.jpg);
     background-repeat: no-repeat;

@@ -1,3 +1,25 @@
+<?php 
+session_start();
+
+if ($_SESSION['rol'] !== 'CAJERO') {
+    switch ($_SESSION['rol']) {
+        case 'COCINERO':
+            header('Location: /dashboard/pages/cocina.php');
+            break;
+        case 'BARTENDER':
+            header('Location: /dashboard/pages/bar.php');
+            break;
+        case 'MOZO':
+            header('Location: /');
+            break;
+        default:
+            header('Location: /dashboard/pages/login.php');
+            break;
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,19 +43,17 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../index.html">Inicio</a>
+                            <a class="nav-link active" href="caja.php">Caja</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="cocina.html">Cocina</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="bar.html">Bar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="caja.html">Caja</a>
+                        <li class="nav-item dropdown justify-content-end">
+                            <a class="nav-link dropdown-toggle usuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hola, <?php echo $_SESSION['nombre'];  ?>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/dashboard/db/logout.php">Salir</a></li>
+                            </ul>
                         </li>
                     </ul>
-                    <a class="btn btn-outline-primary" role="button" href="login.html">Login</a>
                 </div>
             </div>
         </nav>
@@ -49,66 +69,66 @@
         <section class="bar__pedidos container my-5">
             <h2 class="caja__subtitulo text-center">MESAS</h2>
             <div class="row py-3">
-                <a href="detalle-mesa.html" class="col-3">
+                <a href="detalle-mesa.php" class="col-3">
                     <div class="card card-body">
                         <h3 class="card-title mx-auto my-auto">01</h3>
                     </div>
                 </a>
-                <a href="detalle-mesa.html" class="col-3">
+                <a href="detalle-mesa.php" class="col-3">
                     <div class="card card-body">
                         <h3 class="card-title mx-auto my-auto">02</h3>
                     </div>
                 </a>
-                <a href="detalle-mesa.html" class="col-3">
+                <a href="detalle-mesa.php" class="col-3">
                     <div class="card card-body">
                         <h3 class="card-title mx-auto my-auto">03</h3>
                     </div>
                 </a>
-                <a href="detalle-mesa.html" class="col-3">
+                <a href="detalle-mesa.php" class="col-3">
                     <div class="card card-body">
                         <h3 class="card-title mx-auto my-auto">04</h3>
                     </div>
                 </a>
             </div>
             <div class="row py-3">
-                <a href="detalle-mesa.html" class="col-3">
+                <a href="detalle-mesa.php" class="col-3">
                     <div class="card card-body">
                         <h3 class="card-title mx-auto my-auto">05</h3>
                     </div>
                 </a>
-                <a href="detalle-mesa.html" class="col-3">
+                <a href="detalle-mesa.php" class="col-3">
                     <div class="card card-body">
                         <h3 class="card-title mx-auto my-auto">06</h3>
                     </div>
                 </a>
-                <a href="detalle-mesa.html" class="col-3">
+                <a href="detalle-mesa.php" class="col-3">
                     <div class="card card-body">
                         <h3 class="card-title mx-auto my-auto">07</h3>
                     </div>
                 </a>
-                <a href="detalle-mesa.html" class="col-3">
+                <a href="detalle-mesa.php" class="col-3">
                     <div class="card card-body">
                         <h3 class="card-title mx-auto my-auto">08</h3>
                     </div>
                 </a>
             </div>
             <div class="row py-3">
-                <a href="detalle-mesa.html" class="col-3">
+                <a href="detalle-mesa.php" class="col-3">
                     <div class="card card-body">
                         <h3 class="card-title mx-auto my-auto">09</h3>
                     </div>
                 </a>
-                <a href="detalle-mesa.html" class="col-3">
+                <a href="detalle-mesa.php" class="col-3">
                     <div class="card card-body">
                         <h3 class="card-title mx-auto my-auto">10</h3>
                     </div>
                 </a>
-                <a href="detalle-mesa.html" class="col-3">
+                <a href="detalle-mesa.php" class="col-3">
                     <div class="card card-body">
                         <h3 class="card-title mx-auto my-auto">11</h3>
                     </div>
                 </a>
-                <a href="detalle-mesa.html" class="col-3">
+                <a href="detalle-mesa.php" class="col-3">
                     <div class="card card-body">
                         <h3 class="card-title mx-auto my-auto">12</h3>
                     </div>

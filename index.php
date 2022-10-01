@@ -1,3 +1,25 @@
+<?php 
+session_start();
+
+if ($_SESSION['rol'] !== 'MOZO') {
+    switch ($_SESSION['rol']) {
+        case 'COCINERO':
+            header('Location: /dashboard/pages/cocina.php');
+            break;
+        case 'BARTENDER':
+            header('Location: /dashboard/pages/bar.php');
+            break;
+        case 'CAJERO':
+            header('Location: /dashboard/pages/caja.php');
+            break;
+        default:
+            header('Location: /dashboard/pages/login.php');
+            break;
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,19 +43,17 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+                            <a class="nav-link active" aria-current="page" href="index.php">Inicio</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="pages/cocina.html">Cocina</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="pages/bar.html">Bar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="pages/caja.html">Caja</a>
+                        <li class="nav-item dropdown justify-content-end">
+                            <a class="nav-link dropdown-toggle usuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hola, <?php echo $_SESSION['nombre'];  ?>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/dashboard/db/logout.php">Salir</a></li>
+                            </ul>
                         </li>
                     </ul>
-                    <a class="btn btn-outline-primary" role="button" href="pages/login.html">Login</a>
                 </div>
             </div>
         </nav>
@@ -49,7 +69,7 @@
         </section>
         <section id="form" class="formulario container-fluid">
             <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 formulario__caja" method="POST">
-                <h2 class="text-center mt-2 mb-4">Ingrese el pedido</h2>
+                <h2 class="text-center mt-2 mb-4">Ingrese el pedido </h2>
                 <div class="mb-3">
                     <label class="form-label">Ingrese el nombre del plato o bebida: </label>
                     <select class="form-select" placeholder="Nombre del plato">
@@ -75,7 +95,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="disabledTextInput" class="form-label">Nombre mozo</label>
-                    <input type="text" class="form-control" value="Mozo Lucas" id="disabledTextInput" disabled>
+                    <input type="text" class="form-control" value="<?php echo $_SESSION['usuario'];  ?>" id="disabledTextInput" disabled>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Ingrese el número de mesa: </label>

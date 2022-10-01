@@ -1,3 +1,25 @@
+<?php 
+session_start();
+
+if ($_SESSION['rol'] !== 'CAJERO') {
+    switch ($_SESSION['rol']) {
+        case 'COCINERO':
+            header('Location: /dashboard/pages/cocina.php');
+            break;
+        case 'BARTENDER':
+            header('Location: /dashboard/pages/bar.php');
+            break;
+        case 'MOZO':
+            header('Location: /');
+            break;
+        default:
+            header('Location: /dashboard/pages/login.php');
+            break;
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,19 +43,17 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../index.html">Inicio</a>
+                            <a class="nav-link active" href="caja.php">Caja</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="cocina.html">Cocina</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="bar.html">Bar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="caja.html">Caja</a>
+                        <li class="nav-item dropdown justify-content-end">
+                            <a class="nav-link dropdown-toggle usuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hola, <?php echo $_SESSION['nombre'];  ?>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/dashboard/db/logout.php">Salir</a></li>
+                            </ul>
                         </li>
                     </ul>
-                    <a class="btn btn-outline-primary" role="button" href="login.html">Login</a>
                 </div>
             </div>
         </nav>
@@ -84,7 +104,7 @@
             </div>
             <div class="d-flex justify-content-end w-75">
                 <a href="#" class="btn btn-outline-primary mx-2">Cerrar</a>
-                <a href="caja.html" class="btn btn-outline-secondary mx-2">Volver</a>
+                <a href="caja.php" class="btn btn-outline-secondary mx-2">Volver</a>
             </div>
         </section>
         

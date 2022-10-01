@@ -1,0 +1,6 @@
+INSERT INTO usuarios (id, nombreusuario, clave, rol, apellido, nombre) 
+VALUES (NULL, 'jlopez', 'lopez1234', 'MOZO', 'Lopez', 'Juan'), 
+(NULL, 'sgomez', 'gomez1234', 'COCINERO', 'Gomez', 'Silvina'), 
+(NULL, 'jhernandez', 'hernandez1234', 'BARTENDER', 'Hernandez', 'Javier'), 
+(NULL, 'sgutierrez', 'gutierrez1234', 'CAJERO', 'Gutierrez', 'Sofia');
+

@@ -1,3 +1,7 @@
+<?php 
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,37 +21,33 @@
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../index.html">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="cocina.html">Cocina</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="bar.html">Bar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="caja.html">Caja</a>
-                        </li>
-                    </ul>
-                    <a class="btn btn-outline-primary active" role="button" href="login.html">Login</a>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <a class="btn btn-outline-primary active " role="button" href="login.php">Login</a>
                 </div>
             </div>
         </nav>
     </header>
     <main>
         <section id="form" class="login container-fluid">
-            <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 login__form" method="POST">
+            <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 login__form" method="POST" action="../db/validar.php">
+            <?php if (isset($_SESSION['errors'])): ?>
+                <div class="m-2 link-danger">
+                    <?php foreach($_SESSION['errors'] as $error): ?>
+                        <p><?php echo $error ?></p>
+                    <?php endforeach; ?>
+                </div>
+                <?php 
+                session_destroy();
+                endif; 
+                ?>
                 <div class="mb-3">
                     <label class="form-label">Usuario: </label>
-                    <input type="text" class="form-control" placeholder="Usuario" id="user">
+                    <input type="text" class="form-control" name="usuario" placeholder="Usuario" id="user">
                     <div id="errorUsuario"></div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Contraseña: </label>
-                    <input type="password" class="form-control" placeholder="Contraseña" id="password">
+                    <input type="password" class="form-control" name="contrasenia" placeholder="Contraseña" id="password">
                     <div id="errorContra"></div>
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">

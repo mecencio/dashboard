@@ -1,3 +1,25 @@
+<?php 
+session_start();
+
+if ($_SESSION['rol'] !== 'COCINERO') {
+    switch ($_SESSION['rol']) {
+        case 'MOZO':
+            header('Location: /');
+            break;
+        case 'BARTENDER':
+            header('Location: /dashboard/pages/bar.php');
+            break;
+        case 'CAJERO':
+            header('Location: /dashboard/pages/caja.php');
+            break;
+        default:
+            header('Location: /dashboard/pages/login.php');
+            break;
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,19 +43,17 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../index.html">Inicio</a>
+                            <a class="nav-link active" href="cocina.php">Cocina</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="cocina.html">Cocina</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="bar.html">Bar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="caja.html">Caja</a>
+                        <li class="nav-item dropdown justify-content-end">
+                            <a class="nav-link dropdown-toggle usuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hola, <?php echo $_SESSION['nombre'];  ?>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/dashboard/db/logout.php">Salir</a></li>
+                            </ul>
                         </li>
                     </ul>
-                    <a class="btn btn-outline-primary" role="button" href="login.html">Login</a>
                 </div>
             </div>
         </nav>
