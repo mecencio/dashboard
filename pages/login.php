@@ -1,5 +1,11 @@
 <?php 
+include("../db/funciones.php");
+
 session_start();
+if (isset($_SESSION['rol'])){
+    verificarRol($_SESSION['rol']);
+} 
+
 ?>
 
 <!DOCTYPE html>
@@ -30,14 +36,14 @@ session_start();
     <main>
         <section id="form" class="login container-fluid">
             <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 login__form" method="POST" action="../db/validar.php">
-            <?php if (isset($_SESSION['errors'])): ?>
-                <div class="m-2 link-danger">
-                    <?php foreach($_SESSION['errors'] as $error): ?>
-                        <p><?php echo $error ?></p>
-                    <?php endforeach; ?>
-                </div>
+                <?php if (isset($_SESSION['errors'])): ?>
+                    <div class="m-2 link-danger">
+                        <?php foreach($_SESSION['errors'] as $error): ?>
+                            <p><?php echo $error ?></p>
+                        <?php endforeach; ?>
+                    </div>
                 <?php 
-                session_destroy();
+                unset($_SESSION['errors']);
                 endif; 
                 ?>
                 <div class="mb-3">

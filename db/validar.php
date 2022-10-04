@@ -18,7 +18,7 @@ $filas = mysqli_num_rows($resultado);
 
 if ($filas) {
     
-    if ($contrasenia === $row['clave']){
+    if ($contrasenia == $row['clave']){
         $_SESSION['rol'] = $row['rol'];
         $_SESSION['nombre'] = $row['nombre'];
         switch ($row['rol']) {

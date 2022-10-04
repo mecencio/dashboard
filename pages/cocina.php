@@ -1,22 +1,16 @@
 <?php 
+include("../db/funciones.php");
+
 session_start();
 
-if ($_SESSION['rol'] !== 'COCINERO') {
-    switch ($_SESSION['rol']) {
-        case 'MOZO':
-            header('Location: /');
-            break;
-        case 'BARTENDER':
-            header('Location: /dashboard/pages/bar.php');
-            break;
-        case 'CAJERO':
-            header('Location: /dashboard/pages/caja.php');
-            break;
-        default:
-            header('Location: /dashboard/pages/login.php');
-            break;
-    }
+if (isset($_SESSION['rol'])){
+    if ($_SESSION['rol'] != "COCINERO") {
+        verificarRol($_SESSION['rol']);
+    };
+} else {
+    verificarRol("");
 }
+
 
 ?>
 
