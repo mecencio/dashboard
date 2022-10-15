@@ -1,6 +1,32 @@
+<!-- Altas usuarios -->
+
 INSERT INTO usuarios (id, nombreusuario, clave, rol, apellido, nombre) 
 VALUES (NULL, 'jlopez', 'lopez1234', 'MOZO', 'Lopez', 'Juan'), 
 (NULL, 'sgomez', 'gomez1234', 'COCINERO', 'Gomez', 'Silvina'), 
 (NULL, 'jhernandez', 'hernandez1234', 'BARTENDER', 'Hernandez', 'Javier'), 
 (NULL, 'sgutierrez', 'gutierrez1234', 'CAJERO', 'Gutierrez', 'Sofia');
 
+---------------------------------
+
+<!-- Altas menu -->
+INSERT INTO `items_menu` (`id`, `nombre`, `precio`, `tipo`) 
+VALUES (NULL, 'Asado 600gr', 2950, 'COMIDA'),
+(NULL, 'Entraña 600gr', 3240, 'COMIDA'),
+(NULL, 'Bife de chorizo 500gr', 2570, 'COMIDA'),
+(NULL, 'Ojo de bife 500gr', 2570, 'COMIDA'),
+(NULL, 'Cuadril 500gr', 1900, 'COMIDA'),
+(NULL, 'Milanesa de ojo de bife 350gr', 1790, 'COMIDA'),
+(NULL, 'Corte ahumado', 2800, 'COMIDA'),
+(NULL, 'Parrillada', 8400, 'COMIDA'),
+(NULL, 'Matambre de cerdo 500gr', 2240, 'COMIDA'),
+(NULL, 'Pechuga de pollo 350gr', 1340, 'COMIDA'),
+(NULL, 'Jarra de limonada 1 lt', 550, 'BEBIDA'),
+(NULL, 'Jarra de pomelada 1 lt', 700, 'BEBIDA'),
+(NULL, 'Agua 500 cc', 250, 'BEBIDA'),
+(NULL, 'Gaseosa 354 cc', 250, 'BEBIDA'),
+(NULL, 'Vermú La Fuerza', 650, 'BEBIDA'),
+(NULL, 'Gin Tonic importado', 750, 'BEBIDA'),
+(NULL, 'Spritz', 700, 'BEBIDA'),
+(NULL, 'Fernet', 650, 'BEBIDA'),
+(NULL, 'Campari', 650, 'BEBIDA'),
+(NULL, 'Cerveza Stella 500 cc', 460, 'BEBIDA');

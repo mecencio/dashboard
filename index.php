@@ -1,6 +1,7 @@
 <?php 
 include("db/funciones.php");
 
+
 session_start();
 
 if (isset($_SESSION['rol'])){
@@ -69,17 +70,26 @@ if (isset($_SESSION['rol'])){
                     <label class="form-label">Ingrese el nombre del plato o bebida: </label>
                     <select class="form-select" placeholder="Nombre del plato">
                         <optgroup label="Comidas">
-                            <option value="hamburguesa-bacon">Hamburguesa Bacon</option>
-                            <option value="hamburguesa-not-burguer">Hamburguesa Mega cheddar NotBurguer</option>
-                            <option value="hamburguesa-triple-tower">Hamburguesa Triple Tower</option>
-                            <option value="papas-grandes-cheddar-bacon">Papas grandes con Cheddar y Bacon</option>
-                            <option value="hamburguesa-pampeano-doble">Hamburguesa Pampeano Doble</option>
+                            <?php
+                                foreach($_SESSION['menu'] as $a) {
+                                    if ($a['tipo'] == 'COMIDA') {
+                            ?>
+                                        <option value="<?php echo$a['id'] ?>"><?php echo$a['nombre'] ?></option>;
+                            <?php
+                                    }
+                                }
+                            ?>
                         </optgroup>
                         <optgroup label="Bebidas">
-                            <option value="gin-tonic">Gin tonic</option>
-                            <option value="cepita-500ml">Cepita 500ml</option>
-                            <option value="cerveza-stella-473ml">Cerveza Stella Artois 473ml</option>
-                            <option value="fernet-branca-cola">Fernet branca con Cola</option>
+                            <?php
+                                foreach($_SESSION['menu'] as $a) {
+                                    if ($a['tipo'] == 'BEBIDA') {
+                            ?>
+                                        <option value="<?php echo$a['id'] ?>"><?php echo$a['nombre'] ?></option>;
+                            <?php
+                                    }
+                                }
+                            ?>
                         </optgroup>
                     </select>
                 </div>

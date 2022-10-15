@@ -35,16 +35,22 @@ if (isset($_SESSION['rol'])){
     </header>
     <main>
         <section id="form" class="login container-fluid">
-            <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 login__form" method="POST" action="../db/validar.php">
-                <?php if (isset($_SESSION['errors'])): ?>
-                    <div class="m-2 link-danger">
-                        <?php foreach($_SESSION['errors'] as $error): ?>
-                            <p><?php echo $error ?></p>
-                        <?php endforeach; ?>
-                    </div>
+            <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 login__form" method="POST" action="../db/validarLogin.php">
                 <?php 
-                unset($_SESSION['errors']);
-                endif; 
+                    echo $_SESSION["rol"];
+                    if (isset($_SESSION['errors'])): ?>
+                        <div class="m-2 link-danger">
+                <?php 
+                                foreach($_SESSION['errors'] as $error): 
+                ?>
+                                    <p><?php echo $error ?></p>
+                <?php 
+                                endforeach; 
+                ?>
+                        </div>
+                <?php 
+                        unset($_SESSION['errors']);
+                    endif; 
                 ?>
                 <div class="mb-3">
                     <label class="form-label">Usuario: </label>
