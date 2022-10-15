@@ -37,7 +37,6 @@ if (isset($_SESSION['rol'])){
         <section id="form" class="login container-fluid">
             <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 login__form" method="POST" action="../db/validarLogin.php">
                 <?php 
-                    echo $_SESSION["rol"];
                     if (isset($_SESSION['errors'])): ?>
                         <div class="m-2 link-danger">
                 <?php 

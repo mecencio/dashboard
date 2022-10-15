@@ -64,11 +64,29 @@ if (isset($_SESSION['rol'])){
             </article>
         </section>
         <section id="form" class="formulario container-fluid">
-            <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 formulario__caja" method="POST">
+            <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 formulario__caja" method="POST" action="db/creacionPedido.php">
                 <h2 class="text-center mt-2 mb-4">Ingrese el pedido </h2>
+                <div class="d-grid gap-2 col-6 mx-auto my-3">
+                    <?php
+                        if (isset($_SESSION["success"])){
+                    ?>
+                            <div class="btn btn-success disabled"><?php echo $_SESSION["success"] ?></div>
+                    <?php
+                            unset($_SESSION['success']);
+                        }
+                        if (isset($_SESSION['error'])){
+                            foreach($_SESSION['error'] as $a) {
+                    ?>
+                                    <div class="btn btn-danger disabled"><?php echo $a ?></div>
+                    <?php
+                            }
+                        }
+                        unset($_SESSION['error']);
+                    ?>
+                </div>
                 <div class="mb-3">
                     <label class="form-label">Ingrese el nombre del plato o bebida: </label>
-                    <select class="form-select" placeholder="Nombre del plato">
+                    <select class="form-select" placeholder="Nombre del plato" name="pedido">
                         <optgroup label="Comidas">
                             <?php
                                 foreach($_SESSION['menu'] as $a) {
@@ -95,25 +113,24 @@ if (isset($_SESSION['rol'])){
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Comentarios: </label>
-                    <textarea class="form-control"
-                        placeholder="Aqui puede ingresar detalles o cambios en el plato o bebida elegida"></textarea>
+                    <textarea class="form-control" placeholder="Aqui puede ingresar detalles o cambios en el plato o bebida elegida" name="comentarios"></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="disabledTextInput" class="form-label">Nombre mozo</label>
-                    <input type="text" class="form-control" value="<?php echo $_SESSION['usuario'];  ?>" id="disabledTextInput" disabled>
+                    <label class="form-label">Usuario del mozo: </label>
+                    <input type="text" class="form-control form__mozo" value="<?php echo ($_SESSION['usuario']);  ?>" name="mozo" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Ingrese el número de mesa: </label>
-                    <select class="form-select">
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
+                    <select class="form-select" name="mesa">
+                        <option value="1">01</option>
+                        <option value="2">02</option>
+                        <option value="3">03</option>
+                        <option value="4">04</option>
+                        <option value="5">05</option>
+                        <option value="6">06</option>
+                        <option value="7">07</option>
+                        <option value="8">08</option>
+                        <option value="9">09</option>
                         <option value="10">10</option>
                         <option value="11">11</option>
                         <option value="12">12</option>
