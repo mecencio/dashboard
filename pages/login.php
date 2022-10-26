@@ -2,9 +2,11 @@
 include("../db/funciones.php");
 
 session_start();
-if (isset($_SESSION['rol'])){
-    verificarRol($_SESSION['rol']);
+if (isset($_SESSION['usuarioLogueado']['rol'])){
+    verificarRol($_SESSION['usuarioLogueado']['rol']);
 } 
+
+include("../db/validarLogin.php");
 
 ?>
 
@@ -35,20 +37,20 @@ if (isset($_SESSION['rol'])){
     </header>
     <main>
         <section id="form" class="login container-fluid">
-            <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 login__form" method="POST" action="../db/validarLogin.php">
+            <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 login__form" method="POST" action="login.php">
                 <?php 
-                    if (isset($_SESSION['errors'])): ?>
+                    if (isset($errores)): ?>
                         <div class="m-2 link-danger">
                 <?php 
-                                foreach($_SESSION['errors'] as $error): 
+                                foreach($errores as $a): 
                 ?>
-                                    <p><?php echo $error ?></p>
+                                    <p><?php echo $a ?></p>
                 <?php 
                                 endforeach; 
                 ?>
                         </div>
                 <?php 
-                        unset($_SESSION['errors']);
+                        unset($errores);
                     endif; 
                 ?>
                 <div class="mb-3">

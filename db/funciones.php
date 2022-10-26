@@ -9,7 +9,7 @@ function verificarRol($rol){
             header('Location: '. direccionBase .'pages/cocina.php');
             break;
         case 'MOZO':
-            header('Location: '. direccionBase .'db/menu.php');
+            header('Location: '. direccionBase);
             break;
         case 'CAJERO':
             header('Location: '. direccionBase .'pages/caja.php');

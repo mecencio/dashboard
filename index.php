@@ -1,16 +1,21 @@
 <?php 
+
 include("db/funciones.php");
 
 
 session_start();
 
-if (isset($_SESSION['rol'])){
-    if ($_SESSION['rol'] != "MOZO") {
-        verificarRol($_SESSION['rol']);
+if (isset($_SESSION['usuarioLogueado']['rol'])){
+    if ($_SESSION['usuarioLogueado']['rol'] != "MOZO") {
+        verificarRol($_SESSION['usuarioLogueado']['rol']);
     };
 } else {
     verificarRol("");
 }
+
+include("db/creacionPedido.php");
+include("db/menu.php");
+
 
 ?>
 
@@ -43,7 +48,7 @@ if (isset($_SESSION['rol'])){
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle usuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hola, <?php echo $_SESSION['nombre'];  ?>
+                                Hola, <?php echo $_SESSION['usuarioLogueado']['nombre'];  ?>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/dashboard/db/logout.php">Salir</a></li>
@@ -63,36 +68,36 @@ if (isset($_SESSION['rol'])){
                 </div>
             </article>
         </section>
-        <section id="form" class="formulario container-fluid">
-            <form class="col-md-4 col-md-offset-4 mx-auto my-5 p-4 formulario__caja" method="POST" action="db/creacionPedido.php">
+        <section id="form" class="formulario container-fluid d-flex justify-content-center">
+            <form class="col-md-4 col-md-offset-4 mx-3 my-5 p-4 formulario__caja" method="POST" action="index.php">
                 <h2 class="text-center mt-2 mb-4">Ingrese el pedido </h2>
                 <div class="d-grid gap-2 col-6 mx-auto my-3">
                     <?php
-                        if (isset($_SESSION["success"])){
+                        if (isset($success)){
                     ?>
-                            <div class="btn btn-success disabled"><?php echo $_SESSION["success"] ?></div>
+                            <div class="btn btn-success disabled"><?php echo $success ?></div>
                     <?php
-                            unset($_SESSION['success']);
+                            unset($success);
                         }
-                        if (isset($_SESSION['error'])){
-                            foreach($_SESSION['error'] as $a) {
+                        if (isset($errores)){
+                            foreach($errores as $a) {
                     ?>
                                     <div class="btn btn-danger disabled"><?php echo $a ?></div>
                     <?php
                             }
                         }
-                        unset($_SESSION['error']);
+                        unset($errores);
                     ?>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Ingrese el nombre del plato o bebida: </label>
-                    <select class="form-select" placeholder="Nombre del plato" name="pedido">
+                    <select class="form-select" placeholder="Nombre del plato" name="pedido" id="item-menu">
                         <optgroup label="Comidas">
                             <?php
-                                foreach($_SESSION['menu'] as $a) {
+                                foreach($menu as $a) {
                                     if ($a['tipo'] == 'COMIDA') {
                             ?>
-                                        <option value="<?php echo$a['id'] ?>"><?php echo$a['nombre'] ?></option>;
+                                        <option value="<?php echo $a['id'] ?>"><?php echo $a['nombre'] ?></option>;
                             <?php
                                     }
                                 }
@@ -100,10 +105,10 @@ if (isset($_SESSION['rol'])){
                         </optgroup>
                         <optgroup label="Bebidas">
                             <?php
-                                foreach($_SESSION['menu'] as $a) {
+                                foreach($menu as $a) {
                                     if ($a['tipo'] == 'BEBIDA') {
                             ?>
-                                        <option value="<?php echo$a['id'] ?>"><?php echo$a['nombre'] ?></option>;
+                                        <option value="<?php echo $a['id'] ?>"><?php echo $a['nombre'] ?></option>;
                             <?php
                                     }
                                 }
@@ -117,7 +122,7 @@ if (isset($_SESSION['rol'])){
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Usuario del mozo: </label>
-                    <input type="text" class="form-control form__mozo" value="<?php echo ($_SESSION['usuario']);  ?>" name="mozo" readonly>
+                    <input type="text" class="form-control form__mozo" value="<?php echo ($_SESSION['usuarioLogueado']['nombreusuario']);  ?>" name="mozo" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Ingrese el número de mesa: </label>
@@ -140,10 +145,14 @@ if (isset($_SESSION['rol'])){
                     <button type="submit" class="btn btn-outline-primary p-2">Enviar</button>
                 </div>
             </form>
+            <div class="col-md-4 col-md-offset-4 mx-3 my-5 formulario__caja imagen__item" id="imagen-item">
+                <img src="db/mostrarImagen.php?id=<?php echo $menu['0']['id'] ?>" class="p-4 ">
+            </div>
         </section>
     </main>
     <footer>
     </footer>
+    <script src="js/index.js"></script>
     <!-- Bootstrap // JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>

@@ -3,9 +3,9 @@ include("../db/funciones.php");
 
 session_start();
 
-if (isset($_SESSION['rol'])){
-    if ($_SESSION['rol'] != "CAJERO") {
-        verificarRol($_SESSION['rol']);
+if (isset($_SESSION['usuarioLogueado']['rol'])){
+    if ($_SESSION['usuarioLogueado']['rol'] != "CAJERO") {
+        verificarRol($_SESSION['usuarioLogueado']['rol']);
     };
 } else {
     verificarRol("");
@@ -42,7 +42,7 @@ if (isset($_SESSION['rol'])){
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle usuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hola, <?php echo $_SESSION['nombre'];  ?>
+                                Hola, <?php echo $_SESSION['usuarioLogueado']['nombre'];  ?>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/dashboard/db/logout.php">Salir</a></li>

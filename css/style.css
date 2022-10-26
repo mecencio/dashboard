@@ -103,6 +103,11 @@ a {
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
+.imagen__item {
+    max-height: 430px;
+    width: auto;
+}
+
 .btn.btn-outline-primary {
     color: #d19e78;
     border: 1px solid #d19e78;
