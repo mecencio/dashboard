@@ -8,7 +8,7 @@ if (isset($_GET["id"])) {
     $id = $_GET["id"];
     $link = conectar();
 
-    $consulta="UPDATE pedidos SET entregado = 1 WHERE pedidos.idItemMenu = $id";
+    $consulta="UPDATE pedidos SET entregado = 1 WHERE pedidos.id = $id";
 
     if (mysqli_query($link, $consulta)) { // Si el UPDATE se realiza correctamente.
         $resultadoUpdate = "Cambio realizado correctamente"; // Guardo un mensaje de que se realizó correctamente

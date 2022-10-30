@@ -12,8 +12,7 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
 }
 
 $lugar = "bar";
-include("../db/consultaPedidos.php")
-
+include("../db/consultaPedidos.php");
 
 ?>
 
@@ -66,83 +65,84 @@ include("../db/consultaPedidos.php")
             </article>
         </section>
         <section class="bar__pedidos container">
-            <div class="card my-3 text-center w-50 mx-auto" >
+        <?php
+                if (isset($resultadoUpdate)){
+            ?>
+                    <div class="btn btn-success disabled"><?php echo $resultadoUpdate ?></div>
+            <?php
+                    unset($resultadoUpdate);
+                }
+                if (isset($errorUpdate)){
+            ?>
+                <div class="btn btn-danger disabled"><?php echo $errorUpdate ?></div>
+            <?php
+                }
+                unset($errores);
+
+            if(isset($pedidosDelLugar)) {
+                foreach($pedidosDelLugar as $pedido) {
+            ?>
+
+            <div class="card my-3 text-center w-50 mx-auto row">
+                <div class="d-flex flex-row align-items-center">
+                <img src="../db/mostrarImagen.php?id=<?php echo $pedido["idItem"] ?>" class="p-4 " style="width: 300px; height: 171px;">
                 <div class="card-body">
-                    <h5 class="card-title">Gin tonic</h5>
-                    <p class="card-text">Comentarios: Sin pepino.</p>
-                    <p class="card-text">Mozo: </p>
-                    <p class="card-text">Mesa: </p>
-                    <a href="#" class="btn btn-outline-primary">Entregado</a>
+                    <h5 class="card-title"><?php echo $pedido["item"] ?></h5>
+                    <p class="card-text">Comentarios: <?php echo $pedido["comentario"] ?> </p>
+                    <p class="card-text">Mozo: <?php echo $pedido["nombre"] ?> <?php echo $pedido["apellido"] ?></p>
+                    <p class="card-text">Mesa: <?php echo $pedido["mesa"] ?></p>
+                    <a href="../db/marcarEntregado.php?id=<?php echo $pedido["id"] ?>" class="btn btn-outline-primary">Entregado</a>
+                </div>
                 </div>
                 <div class="card-footer text-muted">
-                    2 days ago
+                    <p>Fecha y hora: <?php echo $pedido["fecha"] ?></p>
                 </div>
             </div>
-            <div class="card my-3 text-center w-50 mx-auto" >
-                <div class="card-body">
-                    <h5 class="card-title">Cepita 500ml</h5>
-                    <p class="card-text">Comentarios: </p>
-                    <p class="card-text">Mozo: </p>
-                    <p class="card-text">Mesa: </p>
-                    <a href="#" class="btn btn-outline-primary">Entregado</a>
-                </div>
-                <div class="card-footer text-muted">
-                    2 days ago
-                </div>
-            </div>
-            <div class="card my-3 text-center w-50 mx-auto" >
-                <div class="card-body">
-                    <h5 class="card-title">Cerveza Stella Artois 473ml</h5>
-                    <p class="card-text">Comentarios: </p>
-                    <p class="card-text">Mozo: </p>
-                    <p class="card-text">Mesa: </p>
-                    <a href="#" class="btn btn-outline-primary">Entregado</a>
-                </div>
-                <div class="card-footer text-muted">
-                    2 days ago
-                </div>
-            </div>
-            <div class="card my-3 text-center w-50 mx-auto" >
-                <div class="card-body">
-                    <h5 class="card-title">Cerveza Stella Artois 473ml</h5>
-                    <p class="card-text">Comentarios: </p>
-                    <p class="card-text">Mozo: </p>
-                    <p class="card-text">Mesa: </p>
-                    <a href="#" class="btn btn-outline-primary">Entregado</a>
-                </div>
-                <div class="card-footer text-muted">
-                    2 days ago
-                </div>
-            </div>
-            <div class="card my-3 text-center w-50 mx-auto" >
-                <div class="card-body">
-                    <h5 class="card-title">Fernet branca con Cola</h5>
-                    <p class="card-text">Comentarios: </p>
-                    <p class="card-text">Mozo: </p>
-                    <p class="card-text">Mesa: </p>
-                    <a href="#" class="btn btn-outline-primary">Entregado</a>
-                </div>
-                <div class="card-footer text-muted">
-                    2 days ago
-                </div>
-            </div>
+            <?php
+                }
+            }
+            ?>
         </section>
     </main>
     <footer class="mt-4">
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+            <li class="page-item">
+                    <?php
+                        if (isset($_GET["inicio"]) && isset($_GET["limite"]) && ($_GET["inicio"] != "1") && ($_GET["limite"] != 5)) {
+                    ?>
+                    <a class="page-link" href="bar.php?inicio=<?php echo intval($_GET["inicio"])-5 ?>&limite=<?php echo intval($_GET["limite"])-5 ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
+                    <?php
+                        }
+                    ?>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <?php
+                    for ($i = 1; $i <= $paginas; $i++) {
+                ?>
+                    <li class="page-item paginas"><a class="page-link" href="bar.php?inicio=<?php echo (5*($i-1))+1 ?>&limite=<?php echo (5*$i) ?>"><?php echo $i ?></a></li>
+                <?php
+                    }
+                ?>
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                    <?php
+                        if (isset($_GET["inicio"]) && isset($_GET["limite"])) {
+                            if (($_GET["inicio"] != (5*($paginas-1))+1) && ($_GET["limite"] != (5*$paginas))) {
+                    ?>
+                                <a class="page-link" href="bar.php?inicio=<?php echo (5*($_GET["inicio"]-1))+1 ?>&limite=<?php echo (5*$$_GET["limite"]) ?>" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                    <?php
+                            }
+                        } else if (isset($pedidosDelLugar)) {
+                    ?>
+                    <a class="page-link" href="bar.php?inicio=6&limite=10" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
+                    <?php
+                        }  
+                    ?>
                 </li>
             </ul>
         </nav>

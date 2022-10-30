@@ -14,10 +14,6 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
 $lugar = "cocina";
 include("../db/consultaPedidos.php")
 
-// Usar ceil para redondear Q de páginas
-// Corregir para que no consulte constantemente la base
-// Usar disabled en vez de que los botones desaparezcan
-// Pasar el resultado de la consulta a JS para evitar consultar la bbdd constantemente
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +85,7 @@ include("../db/consultaPedidos.php")
 
             <div class="card my-3 text-center w-50 mx-auto row">
                 <div class="d-flex flex-row align-items-center">
-                <img src="../db/mostrarImagen.php?id=<?php echo $pedido["id"] ?>" class="p-4 " style="width: 300px; height: 171px;">
+                <img src="../db/mostrarImagen.php?id=<?php echo $pedido["idItem"] ?>" class="p-4 " style="width: 300px; height: 171px;">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $pedido["item"] ?></h5>
                     <p class="card-text">Comentarios: <?php echo $pedido["comentario"] ?> </p>
@@ -125,7 +121,7 @@ include("../db/consultaPedidos.php")
                 <?php
                     for ($i = 1; $i <= $paginas; $i++) {
                 ?>
-                    <li class="page-item"><a class="page-link" href="cocina.php?inicio=<?php echo (5*($i-1))+1 ?>&limite=<?php echo (5*$i) ?>"><?php echo $i ?></a></li>
+                    <li class="page-item paginas"><a class="page-link" href="cocina.php?inicio=<?php echo (5*($i-1))+1 ?>&limite=<?php echo (5*$i) ?>"><?php echo $i ?></a></li>
                 <?php
                     }
                 ?>
