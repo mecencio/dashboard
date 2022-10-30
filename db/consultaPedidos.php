@@ -28,9 +28,9 @@ $pedidosDelLugar = array();
 
 $inicio = 1;
 $limite = 5;
-if (isset($_GET["inicio"]) && isset($_GET["limite"])) {
+if (isset($_GET["inicio"])) {
     $inicio = intval($_GET["inicio"]);
-    $limite = intval($_GET["limite"]);
+    $limite = $inicio+4;
 }
 
 $cant = 1;

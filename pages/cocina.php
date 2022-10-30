@@ -95,7 +95,7 @@ include("../db/consultaPedidos.php")
                 </div>
                 </div>
                 <div class="card-footer text-muted">
-                    <p>Fecha y hora: <?php echo $pedido["fecha"] ?></p>
+                    <p class="my-1">Fecha y hora: <?php echo $pedido["fecha"] ?></p>
                 </div>
             </div>
             <?php
@@ -107,42 +107,34 @@ include("../db/consultaPedidos.php")
     <footer class="mt-4">
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <?php
-                        if (isset($_GET["inicio"]) && isset($_GET["limite"]) && ($_GET["inicio"] != "1") && ($_GET["limite"] != 5)) {
-                    ?>
-                    <a class="page-link" href="cocina.php?inicio=<?php echo intval($_GET["inicio"])-5 ?>&limite=<?php echo intval($_GET["limite"])-5 ?>" aria-label="Previous">
+                <!-- Boton previous -->
+                <!-- PHP de adentro : En caso de que estemos viendo la primera página desactiva el boton (porque no hay página previa) -->
+                <li class="page-item <?php echo (isset($_GET["inicio"]) && ($_GET["inicio"] != "1"))? '':'disabled'; ?>">
+                <!-- PHP de adentro: setea la página previa restándole 5 al dato pasado por GET (Si existiera). Son 5 por la cantidad de registros por pag -->
+                    <a class="page-link" href="cocina.php?inicio=<?php echo isset($_GET["inicio"])?intval($_GET["inicio"])-5:1; ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
-                    <?php
-                        }
-                    ?>
                 </li>
                 <?php
+                    // Por cada página
                     for ($i = 1; $i <= $paginas; $i++) {
                 ?>
-                    <li class="page-item paginas"><a class="page-link" href="cocina.php?inicio=<?php echo (5*($i-1))+1 ?>&limite=<?php echo (5*$i) ?>"><?php echo $i ?></a></li>
+                    <!-- Crea un boton con el número de página y con dirección a la busqueda de registros saltando de a 5 -->
+                    <li class="page-item paginas">
+                        <a class="page-link <?php echo (isset($_GET["inicio"]) && $_GET["inicio"] == (5*($i-1))+1)? 'pagina-activa':''; ?><?php echo (!isset($_GET["inicio"]) && $i == 1)? 'pagina-activa':''; ?>" href="cocina.php?inicio=<?php echo (5*($i-1))+1 ?>">
+                            <?php echo $i ?>
+                        </a>
+                    </li>
                 <?php
                     }
                 ?>
-                <li class="page-item">
-                    <?php
-                        if (isset($_GET["inicio"]) && isset($_GET["limite"])) {
-                            if (($_GET["inicio"] != (5*($paginas-1))+1) && ($_GET["limite"] != (5*$paginas))) {
-                    ?>
-                                <a class="page-link" href="cocina.php?inicio=<?php echo (5*($_GET["inicio"]-1))+1 ?>&limite=<?php echo (5*$$_GET["limite"]) ?>" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                    <?php
-                            }
-                        } else if (isset($pedidosDelLugar)) {
-                    ?>
-                    <a class="page-link" href="cocina.php?inicio=6&limite=10" aria-label="Next">
+                <!-- Boton next -->
+                <!-- PHP de adentro : En caso de que estemos viendo la última página desactiva el boton (porque no hay página siguiente) -->
+                <li class="page-item <?php echo (!isset($_GET["inicio"]) || ($_GET["inicio"] != (5*($paginas-1))+1))? '':'disabled'; ?>">
+                    <!-- PHP de adentro: setea la página siguiente sumandole 5 al dato pasado por GET (Si existiera, sino lo define en 6)-->
+                    <a class="page-link" href="cocina.php?inicio=<?php echo isset($_GET["inicio"])?(5*($_GET["inicio"]-1))+1:6; ?> ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
-                    <?php
-                        }  
-                    ?>
                 </li>
             </ul>
         </nav>

@@ -199,16 +199,29 @@ a {
     margin-bottom: 0.5rem;;
 }
 
-.page-link {
-    color: #d19e78;
-}
-
+.page-link,
 .page-link:active,
 .page-link:hover {
     color: #d19e78;
 }
 
+.page-item {
+    user-select: none;
+}
 
+.page-item.disabled .page-link {
+    color: #d19e78;
+    background-color: #e9ecef;
+}
+
+.pagina-activa {
+    color: white !important;
+    background-color: #d19e78;
+}
+
+.pagina-activa:hover {
+    background-color: #79573d;
+}
 
 /********** página bar **********/
 
