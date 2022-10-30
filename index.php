@@ -13,8 +13,8 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
     verificarRol("");
 }
 
-include("db/creacionPedido.php");
 include("db/menu.php");
+include("db/creacionPedido.php");
 
 
 ?>

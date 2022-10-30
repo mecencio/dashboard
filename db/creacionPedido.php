@@ -1,9 +1,6 @@
 <?php
 
 if (isset($_POST["pedido"]) && isset($_POST["mozo"]) && isset($_POST["mesa"])) {
-    include("const.php");
-    include("conexion.php");
-
 
     $link = conectar();
 

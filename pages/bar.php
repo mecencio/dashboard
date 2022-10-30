@@ -11,6 +11,9 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
     verificarRol("");
 }
 
+$lugar = "bar";
+include("../db/consultaPedidos.php")
+
 
 ?>
 
