@@ -12,7 +12,9 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
 }
 
 $lugar = "cocina";
-include("../db/consultaPedidos.php")
+include("../db/consultaPedidos.php");
+
+
 
 ?>
 
@@ -79,28 +81,26 @@ include("../db/consultaPedidos.php")
                 }
                 unset($errores);
 
-            if(isset($pedidosDelLugar)) {
-                foreach($pedidosDelLugar as $pedido) {
+                while ($pedidosDelLugar = mysqli_fetch_assoc ($resultado)) {
             ?>
 
             <div class="card my-3 text-center w-50 mx-auto row">
                 <div class="d-flex flex-row align-items-center">
-                <img src="../db/mostrarImagen.php?id=<?php echo $pedido["idItem"] ?>" class="p-4 " style="width: 300px; height: 171px;">
+                <img src="../db/mostrarImagen.php?id=<?php echo $pedidosDelLugar["idItem"] ?>" class="p-4 " style="width: 300px; height: 171px;">
                 <div class="card-body">
-                    <h5 class="card-title"><?php echo $pedido["item"] ?></h5>
-                    <p class="card-text">Comentarios: <?php echo $pedido["comentario"] ?> </p>
-                    <p class="card-text">Mozo: <?php echo $pedido["nombre"] ?> <?php echo $pedido["apellido"] ?></p>
-                    <p class="card-text">Mesa: <?php echo $pedido["mesa"] ?></p>
-                    <a href="../db/marcarEntregado.php?id=<?php echo $pedido["id"] ?>" class="btn btn-outline-primary">Entregado</a>
+                    <h5 class="card-title"><?php echo $pedidosDelLugar["item"] ?></h5>
+                    <p class="card-text">Comentarios: <?php echo $pedidosDelLugar["comentario"] ?> </p>
+                    <p class="card-text">Mozo: <?php echo $pedidosDelLugar["nombre"] ?> <?php echo $pedidosDelLugar["apellido"] ?></p>
+                    <p class="card-text">Mesa: <?php echo $pedidosDelLugar["mesa"] ?></p>
+                    <a href="../db/marcarEntregado.php?id=<?php echo $pedidosDelLugar["id"] ?>" class="btn btn-outline-primary">Entregado</a>
                 </div>
                 </div>
                 <div class="card-footer text-muted">
-                    <p class="my-1">Fecha y hora: <?php echo $pedido["fecha"] ?></p>
+                    <p class="my-1">Fecha y hora: <?php echo $pedidosDelLugar["fecha"] ?></p>
                 </div>
             </div>
             <?php
                 }
-            }
             ?>
         </section>
     </main>
@@ -109,9 +109,9 @@ include("../db/consultaPedidos.php")
             <ul class="pagination justify-content-center">
                 <!-- Boton previous -->
                 <!-- PHP de adentro : En caso de que estemos viendo la primera página desactiva el boton (porque no hay página previa) -->
-                <li class="page-item <?php echo (isset($_GET["inicio"]) && ($_GET["inicio"] != "1"))? '':'disabled'; ?>">
+                <li class="page-item <?php echo (isset($_GET["inicio"]) && ($_GET["inicio"] != "0"))? '':'disabled'; ?>">
                 <!-- PHP de adentro: setea la página previa restándole 5 al dato pasado por GET (Si existiera). Son 5 por la cantidad de registros por pag -->
-                    <a class="page-link" href="cocina.php?inicio=<?php echo isset($_GET["inicio"])?intval($_GET["inicio"])-5:1; ?>" aria-label="Previous">
+                    <a class="page-link" href="cocina.php?inicio=<?php echo isset($_GET["inicio"])?$_GET["inicio"]-5:0; ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -121,7 +121,7 @@ include("../db/consultaPedidos.php")
                 ?>
                     <!-- Crea un boton con el número de página y con dirección a la busqueda de registros saltando de a 5 -->
                     <li class="page-item paginas">
-                        <a class="page-link <?php echo (isset($_GET["inicio"]) && $_GET["inicio"] == (5*($i-1))+1)? 'pagina-activa':''; ?><?php echo (!isset($_GET["inicio"]) && $i == 1)? 'pagina-activa':''; ?>" href="cocina.php?inicio=<?php echo (5*($i-1))+1 ?>">
+                        <a class="page-link <?php echo (isset($_GET["inicio"]) && $_GET["inicio"] == (5*($i-1)))? 'pagina-activa':''; ?><?php echo (!isset($_GET["inicio"]) && $i == 1)? 'pagina-activa':''; ?>" href="cocina.php?inicio=<?php echo (5*($i-1)) ?>">
                             <?php echo $i ?>
                         </a>
                     </li>
@@ -130,9 +130,9 @@ include("../db/consultaPedidos.php")
                 ?>
                 <!-- Boton next -->
                 <!-- PHP de adentro : En caso de que estemos viendo la última página desactiva el boton (porque no hay página siguiente) -->
-                <li class="page-item <?php echo (!isset($_GET["inicio"]) || ($_GET["inicio"] != (5*($paginas-1))+1))? '':'disabled'; ?>">
+                <li class="page-item <?php echo (!isset($_GET["inicio"]) || ($_GET["inicio"] != (5*($paginas-1))))? '':'disabled'; ?>">
                     <!-- PHP de adentro: setea la página siguiente sumandole 5 al dato pasado por GET (Si existiera, sino lo define en 6)-->
-                    <a class="page-link" href="cocina.php?inicio=<?php echo isset($_GET["inicio"])?(5*($_GET["inicio"]-1))+1:6; ?> ?>" aria-label="Next">
+                    <a class="page-link" href="cocina.php?inicio=<?php echo isset($_GET["inicio"])?$_GET["inicio"]+5:5; ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

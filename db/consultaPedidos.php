@@ -11,46 +11,21 @@ if ($lugar == "cocina") {
     $tipoPedido = "BEBIDA";
 }
 
-$consulta="SELECT pedidos.id as id, items_menu.id as idItem, items_menu.nombre as item, pedidos.comentarios as comentario, usuarios.nombre as nombre, usuarios.apellido as apellido, pedidos.nromesa as mesa, pedidos.fechayhora as fecha, items_menu.tipo as tipo FROM pedidos JOIN items_menu ON items_menu.id = pedidos.idItemMenu JOIN usuarios ON pedidos.idMozo = usuarios.id WHERE ((pedidos.entregado = 0) AND (items_menu.tipo = '$tipoPedido')) ORDER BY fechayhora DESC;";
-
-$resultado=mysqli_query($link,$consulta);
-$filas = mysqli_num_rows($resultado); // Cantidad de filas que trajo
-//guardo los resultado en un array
-$pedidosSinEntregar = array ();
-
-
-
-while ($row = mysqli_fetch_array ($resultado, MYSQLI_ASSOC)) {
-    array_push($pedidosSinEntregar, $row);
-}
-
-$pedidosDelLugar = array();
-
-$inicio = 1;
-$limite = 5;
+$inicio = 0;
 if (isset($_GET["inicio"])) {
     $inicio = intval($_GET["inicio"]);
-    $limite = $inicio+4;
 }
 
-$cant = 1;
-foreach($pedidosSinEntregar as $a) {
-    if (($a["tipo"] == $tipoPedido)){
-        if (($cant >= $inicio) && ($cant <= $limite)) {
-            array_push($pedidosDelLugar, $a);
-        }
-        $cant += 1;
-    }
-}
-unset($pedidosSinEntregar);
-unset($inicio);
-unset($limite);
-unset($cant);
+$consulta="SELECT pedidos.id as id, items_menu.id as idItem, items_menu.nombre as item, pedidos.comentarios as comentario, usuarios.nombre as nombre, usuarios.apellido as apellido, pedidos.nromesa as mesa, pedidos.fechayhora as fecha, items_menu.tipo as tipo FROM pedidos JOIN items_menu ON items_menu.id = pedidos.idItemMenu JOIN usuarios ON pedidos.idMozo = usuarios.id WHERE ((pedidos.entregado = 0) AND (items_menu.tipo = '$tipoPedido')) ORDER BY fechayhora DESC LIMIT $inicio,5;";
 
-$paginas = ceil($filas / 5);
+$resultado=mysqli_query($link,$consulta);
 
-mysqli_free_result($resultado);
 
-mysqli_close($link);
+$consultaPaginas = "SELECT COUNT(pedidos.id) as cantidad FROM pedidos JOIN items_menu ON items_menu.id = pedidos.idItemMenu WHERE ((pedidos.entregado = 0) AND (items_menu.tipo = '$tipoPedido'));";
+$resultadoPaginas=mysqli_query($link,$consultaPaginas);
+$Cantidadfilas = mysqli_fetch_assoc($resultadoPaginas);
+
+$paginas = ceil( $Cantidadfilas["cantidad"] / 5);
+echo $paginas;
 
 ?>
