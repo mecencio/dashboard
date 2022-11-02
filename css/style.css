@@ -228,7 +228,7 @@ a {
 .bar__inicio {
     background-image: url(../resources/bar.jpg);
     background-repeat: no-repeat;
-    background-position: 50% -370%;
+    background-position: top;
     background-attachment: fixed;
 }
 

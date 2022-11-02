@@ -1,6 +1,9 @@
 <?php 
 include("../db/funciones.php");
+Include("../db/const.php");
+Include("../db/conexion.php");
 
+$link = conectar();
 session_start();
 
 if (isset($_SESSION['usuarioLogueado']['rol'])){
@@ -11,10 +14,9 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
     verificarRol("");
 }
 
+include("../db/marcarEntregado.php");
 $lugar = "cocina";
 include("../db/consultaPedidos.php");
-
-
 
 ?>
 
@@ -67,36 +69,37 @@ include("../db/consultaPedidos.php");
             </article>
         </section>
         <section class="cocina__pedidos container">
-            <?php
-                if (isset($resultadoUpdate)){
-            ?>
-                    <div class="btn btn-success disabled"><?php echo $resultadoUpdate ?></div>
-            <?php
-                    unset($resultadoUpdate);
-                }
-                if (isset($errorUpdate)){
-            ?>
-                <div class="btn btn-danger disabled"><?php echo $errorUpdate ?></div>
-            <?php
-                }
-                unset($errores);
+            <div class="row">
+                <?php
+                    if (isset($resultadoUpdate)){
+                ?>
+                        <div class="mt-3 btn btn-success w-50 mx-auto disabled"><?php echo $resultadoUpdate ?></div>
+                <?php
+                        unset($resultadoUpdate);
+                    }
+                    if (isset($errorUpdate)){
+                ?>
+                    <div class="mt-3 btn btn-danger w-50 mx-auto disabled"><?php echo $errorUpdate ?></div>
+                <?php
+                    }
+                    unset($errores);
 
-                while ($pedidosDelLugar = mysqli_fetch_assoc ($resultado)) {
-            ?>
-
+                    while ($pedido = mysqli_fetch_assoc ($resultado)) {
+                ?>
+            </div>
             <div class="card my-3 text-center w-50 mx-auto row">
                 <div class="d-flex flex-row align-items-center">
-                <img src="../db/mostrarImagen.php?id=<?php echo $pedidosDelLugar["idItem"] ?>" class="p-4 " style="width: 300px; height: 171px;">
+                <img src="../db/mostrarImagen.php?id=<?php echo $pedido["idItem"] ?>" class="p-4 " style="width: 300px; height: 171px;">
                 <div class="card-body">
-                    <h5 class="card-title"><?php echo $pedidosDelLugar["item"] ?></h5>
-                    <p class="card-text">Comentarios: <?php echo $pedidosDelLugar["comentario"] ?> </p>
-                    <p class="card-text">Mozo: <?php echo $pedidosDelLugar["nombre"] ?> <?php echo $pedidosDelLugar["apellido"] ?></p>
-                    <p class="card-text">Mesa: <?php echo $pedidosDelLugar["mesa"] ?></p>
-                    <a href="../db/marcarEntregado.php?id=<?php echo $pedidosDelLugar["id"] ?>" class="btn btn-outline-primary">Entregado</a>
+                    <h5 class="card-title"><?php echo $pedido["item"] ?></h5>
+                    <p class="card-text">Comentarios: <?php echo $pedido["comentario"] ?> </p>
+                    <p class="card-text">Mozo: <?php echo $pedido["nombre"] ?> <?php echo $pedido["apellido"] ?></p>
+                    <p class="card-text">Mesa: <?php echo $pedido["mesa"] ?></p>
+                    <a href="cocina.php?id=<?php echo $pedido["id"] ?>" class="btn btn-outline-primary">Entregado</a>
                 </div>
                 </div>
                 <div class="card-footer text-muted">
-                    <p class="my-1">Fecha y hora: <?php echo $pedidosDelLugar["fecha"] ?></p>
+                    <p class="my-1">Fecha y hora: <?php echo $pedido["fecha"] ?></p>
                 </div>
             </div>
             <?php
@@ -130,7 +133,7 @@ include("../db/consultaPedidos.php");
                 ?>
                 <!-- Boton next -->
                 <!-- PHP de adentro : En caso de que estemos viendo la última página desactiva el boton (porque no hay página siguiente) -->
-                <li class="page-item <?php echo (!isset($_GET["inicio"]) || ($_GET["inicio"] != (5*($paginas-1))))? '':'disabled'; ?>">
+                <li class="page-item <?php echo ((isset($_GET["inicio"]) && ($_GET["inicio"] != (5*($paginas-1)))) || ($paginas == 1))? 'disabled':''; ?>">
                     <!-- PHP de adentro: setea la página siguiente sumandole 5 al dato pasado por GET (Si existiera, sino lo define en 6)-->
                     <a class="page-link" href="cocina.php?inicio=<?php echo isset($_GET["inicio"])?$_GET["inicio"]+5:5; ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>

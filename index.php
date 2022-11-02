@@ -1,7 +1,11 @@
 <?php 
 
 include("db/funciones.php");
+Include("db/const.php");
+Include("db/conexion.php");
 
+
+$link = conectar();
 
 session_start();
 

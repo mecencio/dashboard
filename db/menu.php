@@ -1,11 +1,5 @@
 <?php
 
-Include("const.php");
-Include("conexion.php");
-
-
-$link = conectar();
-
 $consulta="SELECT * FROM items_menu ORDER BY tipo ASC";
 $resultado=mysqli_query($link,$consulta);
 //guardo los resultado en un array

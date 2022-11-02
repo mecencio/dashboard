@@ -2,11 +2,7 @@
 
 if (isset($_GET["id"])) {
 
-    Include("const.php");
-    Include("conexion.php");
-
     $id = $_GET["id"];
-    $link = conectar();
 
     $consulta="UPDATE pedidos SET entregado = 1 WHERE pedidos.id = $id";
 
@@ -15,11 +11,6 @@ if (isset($_GET["id"])) {
     } else {
         $errorUpdate = "Error: " . $creacionPedido . "<br>" . mysqli_error($link); // Sino almaceno el error.
     }
-
-    mysqli_close($link);
-
-    header('Location: '. direccionBase .'pages/cocina.php');
-
 }
 
 ?>

@@ -1,10 +1,5 @@
 <?php
 
-Include("const.php");
-Include("conexion.php");
-
-$link = conectar();
-
 if ($lugar == "cocina") {
     $tipoPedido = "COMIDA";
 } else {
@@ -26,6 +21,5 @@ $resultadoPaginas=mysqli_query($link,$consultaPaginas);
 $Cantidadfilas = mysqli_fetch_assoc($resultadoPaginas);
 
 $paginas = ceil( $Cantidadfilas["cantidad"] / 5);
-echo $paginas;
 
 ?>
