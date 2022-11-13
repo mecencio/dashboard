@@ -1,12 +1,12 @@
 <?php 
-include("../db/funciones.php");
+include("../core/funciones.php");
 
 session_start();
 if (isset($_SESSION['usuarioLogueado']['rol'])){
     verificarRol($_SESSION['usuarioLogueado']['rol']);
 } 
 
-include("../db/validarLogin.php");
+include("../core/validarLogin.php");
 
 ?>
 

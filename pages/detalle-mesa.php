@@ -1,6 +1,9 @@
 <?php 
-include("../db/funciones.php");
+include("../core/funciones.php");
+Include("../core/const.php");
+Include("../core/conexion.php");
 
+$link = conectar();
 session_start();
 
 if (isset($_SESSION['usuarioLogueado']['rol'])){
@@ -10,6 +13,8 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
 } else {
     verificarRol("");
 }
+
+include("../core/consultasCaja/buscarPedidoMesa.php");
 
 ?>
 
@@ -45,7 +50,7 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
                                 Hola, <?php echo $_SESSION['usuarioLogueado']['nombre'];  ?>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/dashboard/db/logout.php">Salir</a></li>
+                                <li><a class="dropdown-item" href="/dashboard/core/logout.php">Salir</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -61,49 +66,88 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
                 </div>
             </article>
         </section>
+        <?php
+            if(isset($cantidadFilas) && ($cantidadFilas > 0)) {
+        ?>
         <section class="bar__pedidos container my-5">
             <h2 class="caja__subtitulo text-center">MESAS</h2>
             <div class="card w-50 mx-auto my-5">
                 <div class="card-header text-center fw-bold">
-                    MESA XX
+                    MESA <?php echo $mesa ?>
                 </div>
-                <div class="card-header text-center fw-semibold">
-                    Mozo/s
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-around">
-                        Juan
-                    </li>
-                </ul>
-                <div class="card-header text-center fw-semibold">
-                    Pedido/s
+                <div class="card-header fw-semibold">
+                    <div class="row justify-content-around text-center">
+                        <div class="col-3">Item menu</div>
+                        <div class="col-3">Precio</div>
+                        <div class="col-3">Mozo</div>
+                    </div>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-around">
-                        <div>Item</div>
-                        <div>$ 1000</div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-around">
-                        <div>Item</div>
-                        <div>$ 1000</div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-around">
-                        <div>Item</div>
-                        <div>$ 1000</div>
+                    <?php
+                        while ($item = mysqli_fetch_assoc ($resultado)) {
+                    ?>
+                        <li class="list-group-item">
+                            <div class="row justify-content-around text-center">
+                                <div class="col-3"><?php echo $item["pedido"] ?></div>
+                                <div class="col-3"><?php echo $item["precio"] ?></div>
+                                <div class="col-3"><?php echo $item["nombre"] . " " . $item["apellido"] ?></div>
+                            </div>
+                        </li>
+                    <?php
+                    }
+                    ?>
+                </ul>
+                    <div class="card-footer d-flex justify-content-around fw-semibold">
+                        <div>Total</div>
+                        <div>$ <?php echo $TotalGastado["precio"] ?></div>
+                    </div>
+            </div>
+            <div class="d-flex justify-content-end w-75" id="contenedorCerrar">
+                <a class="btn btn-outline-primary mx-2 shadow-none" id="botonCerrar">Cerrar</a>
+                <a href="caja.php" class="btn btn-outline-secondary mx-2 shadow-none">Volver</a>
+            </div>
+            <form action="caja.php?=nromesa=<?php echo $mesa ?>" class="visually-hidden" id="form" method="POST">
+                <div class="card w-50 mx-auto mb-4">
+                    <input type="text" class="visually-hidden" value="<?php echo $mesa;  ?>" name="nromesa" readonly>
+                    <input type="text" class="visually-hidden" value="<?php echo $_SESSION['usuarioLogueado']['id'];  ?>" name="idCajero" readonly>
+                    <input type="text" class="visually-hidden" value="<?php echo $TotalGastado["precio"];  ?>" name="montoTotal" readonly>
+                    <p class="card-header fw-semibold ">Ingresar descripción: </p>
+                    <div class="d-flex justify-content-center">
+                        <textarea class="form-control border border-0 rounded-top-0 shadow-none" name="descripcion" cols="30" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end w-75">
+                    <button type="submit" class="btn btn-outline-primary mx-2 shadow-none">Cerrar</button>
+                    <a href="caja.php" class="btn btn-outline-secondary mx-2 shadow-none">Volver</a>
+                </div>
+            </form>
+        </section>
+        <?php
+            } else {
+        ?>
+        <section class="bar__pedidos container my-5">
+            <h2 class="caja__subtitulo text-center">MESAS</h2>
+            <div class="card w-50 mx-auto my-5">
+                <div class="card-header text-center fw-bold">
+                    MESA <?php echo $mesa ?>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="row justify-content-around text-center">
+                            <div>La mesa no tiene pedidos</div>
+                        </div>
                     </li>
                 </ul>
-                <div class="card-footer d-flex justify-content-around">
-                    <div>Total</div>
-                    <div>$ 3000</div>
-                </div>
             </div>
             <div class="d-flex justify-content-end w-75">
-                <a href="#" class="btn btn-outline-primary mx-2">Cerrar</a>
-                <a href="caja.php" class="btn btn-outline-secondary mx-2">Volver</a>
+                <a href="caja.php" class="btn btn-outline-secondary mx-2 shadow-none">Volver</a>
             </div>
         </section>
-        
+        <?php
+            }
+        ?>
     </main>
+    <script src="../js/detalle-mesa.js"></script>
     <!-- Bootstrap // JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>

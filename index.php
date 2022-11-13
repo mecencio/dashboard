@@ -1,8 +1,8 @@
 <?php 
 
-include("db/funciones.php");
-Include("db/const.php");
-Include("db/conexion.php");
+include("core/funciones.php");
+Include("core/const.php");
+Include("core/conexion.php");
 
 
 $link = conectar();
@@ -17,8 +17,8 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
     verificarRol("");
 }
 
-include("db/menu.php");
-include("db/creacionPedido.php");
+include("core/consultasIndex/menu.php");
+include("core/consultasIndex/creacionPedido.php");
 
 
 ?>
@@ -55,7 +55,7 @@ include("db/creacionPedido.php");
                                 Hola, <?php echo $_SESSION['usuarioLogueado']['nombre'];  ?>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/dashboard/db/logout.php">Salir</a></li>
+                                <li><a class="dropdown-item" href="/dashboard/core/logout.php">Salir</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -150,7 +150,7 @@ include("db/creacionPedido.php");
                 </div>
             </form>
             <div class="col-md-4 col-md-offset-4 mx-3 my-5 formulario__caja imagen__item" id="imagen-item">
-                <img src="db/mostrarImagen.php?id=<?php echo $menu['0']['id'] ?>" class="p-4 ">
+                <img src="core/mostrarImagen.php?id=<?php echo $menu['0']['id'] ?>" class="p-4 ">
             </div>
         </section>
     </main>

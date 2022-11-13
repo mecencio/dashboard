@@ -9,6 +9,6 @@ item.addEventListener("change", () =>{
     // Reemplazo el contenido del contenedor por una etiqueta img que por get pasa el ID del item seleccionado
     contenedor.innerHTML =
             `
-                <img src="db/mostrarImagen.php?id=${item.value}" class="p-4">
+                <img src="core/mostrarImagen.php?id=${item.value}" class="p-4">
             `;
 })

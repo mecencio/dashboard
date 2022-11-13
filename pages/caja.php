@@ -1,6 +1,9 @@
 <?php 
-include("../db/funciones.php");
+include("../core/funciones.php");
+Include("../core/const.php");
+Include("../core/conexion.php");
 
+$link = conectar();
 session_start();
 
 if (isset($_SESSION['usuarioLogueado']['rol'])){
@@ -11,6 +14,8 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
     verificarRol("");
 }
 
+include("../core/consultasCaja/cierreDeMesa.php");
+include("../core/consultasCaja/tienePedidosLaMesa.php");
 
 ?>
 
@@ -46,7 +51,7 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
                                 Hola, <?php echo $_SESSION['usuarioLogueado']['nombre'];  ?>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/dashboard/db/logout.php">Salir</a></li>
+                                <li><a class="dropdown-item" href="/dashboard/core/logout.php">Salir</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -64,71 +69,189 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
         </section>
         <section class="bar__pedidos container my-5">
             <h2 class="caja__subtitulo text-center">MESAS</h2>
-            <div class="row py-3">
-                <a href="detalle-mesa.php" class="col-3">
+            <div class="d-grid gap-2 col-6 mx-auto my-3">
+                <?php
+                    if (isset($resultadoUpdate)) {
+                ?>
+                        <div class="btn btn-success disabled"><?php echo $resultadoUpdate ?></div>
+                <?php
+                        unset($resultadoUpdate);
+                    }
+                    if (isset($errorUpdate)) {
+                ?>
+                        <div class="disabled d-flex"><?php echo $errorUpdate ?></div>
+                <?php
+                    unset($errorUpdate);
+                    }
+                ?>
+            </div>
+            <div class="row">
+                <?php
+                    for ($i=0; $i<12;$i++) {
+                ?>
+                <a href="detalle-mesa.php?nromesa=<?php echo $i+1 ?>" class="col-3 py-3">
                     <div class="card card-body">
-                        <h3 class="card-title mx-auto my-auto">01</h3>
+                        <?php if ($pedidosMesa[$i] != 0) {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-danger fw-bold"><?php echo $i+1 ?></h3>
+                        <?php } else {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-success fw-bold"><?php echo $i+1 ?></h3>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </a>
-                <a href="detalle-mesa.php" class="col-3">
+                <?php
+                    }
+                ?>
+                <!-- <a href="detalle-mesa.php?nromesa=02" class="col-3">
                     <div class="card card-body">
-                        <h3 class="card-title mx-auto my-auto">02</h3>
+                        <?php if ($cantidadPedidosMesa02["cantidad"] != 0) {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-danger fw-bold">02</h3>
+                        <?php } else {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-success fw-bold">02</h3>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </a>
-                <a href="detalle-mesa.php" class="col-3">
+                <a href="detalle-mesa.php?nromesa=03" class="col-3">
                     <div class="card card-body">
-                        <h3 class="card-title mx-auto my-auto">03</h3>
+                        <?php if ($cantidadPedidosMesa03["cantidad"] != 0) {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-danger fw-bold">03</h3>
+                        <?php } else {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-success fw-bold">03</h3>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </a>
-                <a href="detalle-mesa.php" class="col-3">
+                <a href="detalle-mesa.php?nromesa=04" class="col-3">
                     <div class="card card-body">
-                        <h3 class="card-title mx-auto my-auto">04</h3>
+                        <?php if ($cantidadPedidosMesa04["cantidad"] != 0) {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-danger fw-bold">04</h3>
+                        <?php } else {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-success fw-bold">04</h3>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </a>
             </div>
             <div class="row py-3">
-                <a href="detalle-mesa.php" class="col-3">
+                <a href="detalle-mesa.php?nromesa=05" class="col-3">
                     <div class="card card-body">
-                        <h3 class="card-title mx-auto my-auto">05</h3>
+                        <?php if ($cantidadPedidosMesa05["cantidad"] != 0) {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-danger fw-bold">05</h3>
+                        <?php } else {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-success fw-bold">05</h3>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </a>
-                <a href="detalle-mesa.php" class="col-3">
+                <a href="detalle-mesa.php?nromesa=06" class="col-3">
                     <div class="card card-body">
-                        <h3 class="card-title mx-auto my-auto">06</h3>
+                        <?php if ($cantidadPedidosMesa06["cantidad"] != 0) {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-danger fw-bold">06</h3>
+                        <?php } else {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-success fw-bold">06</h3>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </a>
-                <a href="detalle-mesa.php" class="col-3">
+                <a href="detalle-mesa.php?nromesa=07" class="col-3">
                     <div class="card card-body">
-                        <h3 class="card-title mx-auto my-auto">07</h3>
+                        <?php if ($cantidadPedidosMesa07["cantidad"] != 0) {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-danger fw-bold">07</h3>
+                        <?php } else {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-success fw-bold">07</h3>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </a>
-                <a href="detalle-mesa.php" class="col-3">
+                <a href="detalle-mesa.php?nromesa=08" class="col-3">
                     <div class="card card-body">
-                        <h3 class="card-title mx-auto my-auto">08</h3>
+                        <?php if ($cantidadPedidosMesa08["cantidad"] != 0) {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-danger fw-bold">08</h3>
+                        <?php } else {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-success fw-bold">08</h3>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </a>
             </div>
             <div class="row py-3">
-                <a href="detalle-mesa.php" class="col-3">
+                <a href="detalle-mesa.php?nromesa=09" class="col-3">
                     <div class="card card-body">
-                        <h3 class="card-title mx-auto my-auto">09</h3>
+                        <?php if ($cantidadPedidosMesa09["cantidad"] != 0) {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-danger fw-bold">09</h3>
+                        <?php } else {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-success fw-bold">09</h3>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </a>
-                <a href="detalle-mesa.php" class="col-3">
+                <a href="detalle-mesa.php?nromesa=10" class="col-3">
                     <div class="card card-body">
-                        <h3 class="card-title mx-auto my-auto">10</h3>
+                        <?php if ($cantidadPedidosMesa10["cantidad"] != 0) {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-danger fw-bold">10</h3>
+                        <?php } else {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-success fw-bold">10</h3>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </a>
-                <a href="detalle-mesa.php" class="col-3">
+                <a href="detalle-mesa.php?nromesa=11" class="col-3">
                     <div class="card card-body">
-                        <h3 class="card-title mx-auto my-auto">11</h3>
+                        <?php if ($cantidadPedidosMesa11["cantidad"] != 0) {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-danger fw-bold">11</h3>
+                        <?php } else {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-success fw-bold">11</h3>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </a>
-                <a href="detalle-mesa.php" class="col-3">
+                <a href="detalle-mesa.php?nromesa=12" class="col-3">
                     <div class="card card-body">
-                        <h3 class="card-title mx-auto my-auto">12</h3>
+                        <?php if ($cantidadPedidosMesa12["cantidad"] != 0) {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-danger fw-bold">12</h3>
+                        <?php } else {
+                        ?>
+                            <h3 class="card-title mx-auto my-auto text-success fw-bold">12</h3>
+                        <?php
+                        }
+                        ?>
                     </div>
-                </a>
+                </a> -->
             </div>
         </section>
     </main>

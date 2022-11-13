@@ -1,7 +1,7 @@
 <?php 
-include("../db/funciones.php");
-Include("../db/const.php");
-Include("../db/conexion.php");
+include("../core/funciones.php");
+Include("../core/const.php");
+Include("../core/conexion.php");
 
 $link = conectar();
 session_start();
@@ -14,9 +14,9 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
     verificarRol("");
 }
 
-include("../db/marcarEntregado.php");
+include("../core/consultasCocinaBar/marcarEntregado.php");
 $lugar = "cocina";
-include("../db/consultaPedidos.php");
+include("../core/consultasCocinaBar/consultaPedidos.php");
 
 ?>
 
@@ -52,7 +52,7 @@ include("../db/consultaPedidos.php");
                                 Hola, <?php echo $_SESSION['usuarioLogueado']['nombre'];  ?>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/dashboard/db/logout.php">Salir</a></li>
+                                <li><a class="dropdown-item" href="/dashboard/core/logout.php">Salir</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -89,7 +89,7 @@ include("../db/consultaPedidos.php");
             </div>
             <div class="card my-3 text-center w-50 mx-auto row">
                 <div class="d-flex flex-row align-items-center">
-                <img src="../db/mostrarImagen.php?id=<?php echo $pedido["idItem"] ?>" class="p-4 " style="width: 300px; height: 171px;">
+                <img src="../core/mostrarImagen.php?id=<?php echo $pedido["idItem"] ?>" class="p-4 " style="width: 300px; height: 171px;">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $pedido["item"] ?></h5>
                     <p class="card-text">Comentarios: <?php echo $pedido["comentario"] ?> </p>
