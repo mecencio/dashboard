@@ -1,5 +1,6 @@
 <?php
 
+// Si llega por post los 4 datos indicados abajo
 if (isset($_POST["nromesa"]) && isset($_POST["idCajero"]) && isset($_POST["montoTotal"]) && isset($_POST["descripcion"])) {
 
     $link = conectar();
@@ -15,7 +16,7 @@ if (isset($_POST["nromesa"]) && isset($_POST["idCajero"]) && isset($_POST["monto
     $consulta="INSERT INTO `cierres_de_mesas`(`id`, `nromesa`, `fechayhora`, `idCajero`, `montoTotal`, `descripcion`) VALUES (NULL, '$mesa', '$fecha', '$cajero', '$monto', '$descripcion');";
 
     if(mysqli_query($link,$consulta)) { // Si el INSERT se realiza correctamente.
-        $idCierre = mysqli_insert_id($link); // Guardo un mensaje de que se realizó correctamente
+        $idCierre = mysqli_insert_id($link); // Almaceno el ID del insert que se realizó
 
         // Actualizo todos los pedidos de la mesa para que idCierre sea igual al cierre creado
         $consultaUpdate = "UPDATE `pedidos` SET `idCierreDeMesa` = '$idCierre' WHERE `pedidos`.`nromesa` = '$mesa';";

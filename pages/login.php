@@ -6,7 +6,7 @@ if (isset($_SESSION['usuarioLogueado']['rol'])){
     verificarRol($_SESSION['usuarioLogueado']['rol']);
 } 
 
-include("../core/validarLogin.php");
+include("../core/consultasLogin/validarLogin.php");
 
 ?>
 

@@ -27,7 +27,7 @@ include("../core/consultasCaja/buscarPedidoMesa.php");
     <!-- CSS Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
-    <title>Bar</title>
+    <title>Caja</title>
 </head>
 <body>
     <header>
@@ -106,7 +106,7 @@ include("../core/consultasCaja/buscarPedidoMesa.php");
                 <a class="btn btn-outline-primary mx-2 shadow-none" id="botonCerrar">Cerrar</a>
                 <a href="caja.php" class="btn btn-outline-secondary mx-2 shadow-none">Volver</a>
             </div>
-            <form action="caja.php?=nromesa=<?php echo $mesa ?>" class="visually-hidden" id="form" method="POST">
+            <form action="caja.php?nromesa=<?php echo $mesa ?>" class="visually-hidden" id="form" method="POST">
                 <div class="card w-50 mx-auto mb-4">
                     <input type="text" class="visually-hidden" value="<?php echo $mesa;  ?>" name="nromesa" readonly>
                     <input type="text" class="visually-hidden" value="<?php echo $_SESSION['usuarioLogueado']['id'];  ?>" name="idCajero" readonly>
@@ -123,7 +123,7 @@ include("../core/consultasCaja/buscarPedidoMesa.php");
             </form>
         </section>
         <?php
-            } else {
+            } else if (isset($cantidadFilas)) {
         ?>
         <section class="bar__pedidos container my-5">
             <h2 class="caja__subtitulo text-center">MESAS</h2>
@@ -138,6 +138,18 @@ include("../core/consultasCaja/buscarPedidoMesa.php");
                         </div>
                     </li>
                 </ul>
+            </div>
+            <div class="d-flex justify-content-end w-75">
+                <a href="caja.php" class="btn btn-outline-secondary mx-2 shadow-none">Volver</a>
+            </div>
+        </section>
+        <?php
+            } else {
+        ?>
+        <section class="bar__pedidos container my-5">
+            <h2 class="caja__subtitulo text-center">MESAS</h2>
+            <div class="row ">
+                <div class="btn btn-danger my-5 mx-auto w-75 disabled"><?php echo $errorBusqueda ?></div>
             </div>
             <div class="d-flex justify-content-end w-75">
                 <a href="caja.php" class="btn btn-outline-secondary mx-2 shadow-none">Volver</a>
