@@ -1,17 +1,17 @@
 <?php 
-include("../core/funciones.php");
 Include("../core/const.php");
 Include("../core/conexion.php");
+Include("../core/objetos.php");
 
 $link = conectar();
 session_start();
 
-if (isset($_SESSION['usuarioLogueado']['rol'])){
-    if ($_SESSION['usuarioLogueado']['rol'] != "CAJERO") {
-        verificarRol($_SESSION['usuarioLogueado']['rol']);
+if (isset($_SESSION['usuario'])){
+    if ($_SESSION['usuario']->getRol() != "CAJERO") {
+        $_SESSION['usuario']->verificarRol();
     };
 } else {
-    verificarRol("");
+    header('Location: '. direccionBase .'pages/login.php');
 }
 
 include("../core/consultasCaja/buscarPedidoMesa.php");
@@ -47,7 +47,7 @@ include("../core/consultasCaja/buscarPedidoMesa.php");
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle usuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hola, <?php echo $_SESSION['usuarioLogueado']['nombre'];  ?>
+                                Hola, <?php echo $_SESSION['usuario']->getNombre();  ?>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/dashboard/core/logout.php">Salir</a></li>
@@ -109,7 +109,7 @@ include("../core/consultasCaja/buscarPedidoMesa.php");
             <form action="caja.php?nromesa=<?php echo $mesa ?>" class="visually-hidden" id="form" method="POST">
                 <div class="card w-50 mx-auto mb-4">
                     <input type="text" class="visually-hidden" value="<?php echo $mesa;  ?>" name="nromesa" readonly>
-                    <input type="text" class="visually-hidden" value="<?php echo $_SESSION['usuarioLogueado']['id'];  ?>" name="idCajero" readonly>
+                    <input type="text" class="visually-hidden" value="<?php echo $_SESSION['usuario']->getId();  ?>" name="idCajero" readonly>
                     <input type="text" class="visually-hidden" value="<?php echo $TotalGastado["precio"];  ?>" name="montoTotal" readonly>
                     <p class="card-header fw-semibold ">Ingresar descripción: </p>
                     <div class="d-flex justify-content-center">

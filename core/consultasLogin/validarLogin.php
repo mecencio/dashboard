@@ -1,8 +1,9 @@
 <?php
 
 if (isset($_POST["usuario"]) && isset($_POST["contrasenia"])) {
-    include("const.php");
-    Include("conexion.php");
+    include("../core/const.php");
+    Include("../core/conexion.php");
+    include("../core/objetos.php");
 
     $link = conectar();
 
@@ -27,8 +28,8 @@ if (isset($_POST["usuario"]) && isset($_POST["contrasenia"])) {
         // Como el usuario no se puede repetir la cantidad de resultados debería ser 1 o 0
         // Si hay filas y la contaseña ingresada coincide con la que arrojó la consulta
         if ($filas && $contrasenia == $row['clave']) {
-            $_SESSION['usuarioLogueado'] = $row; // Guardo el array en la session para que lo usen todas las pag
-            verificarRol($row['rol']); // Utilizo la función verificar para que lo dirija a la página que corresponda.
+            $_SESSION["usuario"] = new Usuario($row['id'], $row['nombre'], $row['apellido'], $row['rol'], $row['nombreusuario'], $row['clave']);
+            $_SESSION["usuario"]->verificarRol(); // Utilizo la función verificar para que lo dirija a la página que corresponda.
         } else {
             // Sino arroja resultados o la contraseña no coincide devuelve el error.
             array_push($errores, "* El usuario o la contraseña ingresado es incorrecto.");

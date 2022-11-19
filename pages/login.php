@@ -1,10 +1,10 @@
 <?php 
-include("../core/funciones.php");
 
 session_start();
-if (isset($_SESSION['usuarioLogueado']['rol'])){
-    verificarRol($_SESSION['usuarioLogueado']['rol']);
-} 
+
+if (isset($_SESSION['usuario'])){
+    $_SESSION['usuario']->verificarRol();
+}
 
 include("../core/consultasLogin/validarLogin.php");
 

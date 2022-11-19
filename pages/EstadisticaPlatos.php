@@ -14,8 +14,7 @@ if (isset($_SESSION['usuario'])){
     header('Location: '. direccionBase .'pages/login.php');
 }
 
-include("../core/consultasCaja/cierreDeMesa.php");
-include("../core/consultasCaja/tienePedidosLaMesa.php");
+include("../core/estadisticas/platosMasConsumidos.php");
 
 ?>
 
@@ -60,65 +59,44 @@ include("../core/consultasCaja/tienePedidosLaMesa.php");
         </nav>
     </header>
     <main>
-        <section class="caja__inicio">
+        <section class="caja__inicio" id="inicio">
             <article class="caja__opacidad">
                 <div class="caja__contenido">
                     <h1 class="caja__titulo">C A J A</h1>
                 </div>
             </article>
         </section>
-        <section class="bar__pedidos container my-3">
-            <div class="row mb-5">
-                <div class="col-3 mx-auto">
-                    <a href="EstadisticaPlatos.php" class="btn btn-outline-primary mx-2 shadow-none">Platos más consumidos</a>
-                </div>
-                <div class="col-3 mx-auto">
-                    <a href="estadisticaMozos.php" class="btn btn-outline-primary mx-2 shadow-none">Mozos que más vendieron</a>
-                </div>
-                <div class="col-3 mx-auto">
-                    <a href="caja.php" class="btn btn-outline-primary mx-2 shadow-none">Listado de mesas cerradas</a>
-                </div>
+        <section class="cocina__pedidos container container my-3">
+            <div class="d-flex justify-content-end w-75 mb-5">
+                <a href="caja.php" class="btn btn-outline-secondary mx-2 shadow-none">Volver</a>
             </div>
-            <h2 class="caja__subtitulo text-center">MESAS</h2>
-            <div class="row my-3 text-center">
-                <?php
-                    if (isset($resultadoUpdate)) {
-                ?>
-                        <div class="btn btn-success w-75 mx-auto disabled"><?php echo $resultadoUpdate ?></div>
-                <?php
-                        unset($resultadoUpdate);
-                    }
-                    if (isset($error)) {
-                ?>
-                        <div class="btn btn-danger w-75 mx-auto disabled"><?php echo $error ?></div>
-                <?php
-                    unset($error);
-                    }
-                ?>
-            </div>
-            <div class="row">
-                <?php
-                    for ($i=0; $i<12;$i++) {
-                ?>
-                <a href="detalle-mesa.php?nromesa=<?php echo $i+1 ?>" class="col-3 py-3">
-                    <div class="card card-body">
-                        <?php if ($pedidosMesa[$i] != 0) {
-                        ?>
-                            <h3 class="card-title mx-auto my-auto text-danger fw-bold"><?php echo $i+1 ?></h3>
-                        <?php } else {
-                        ?>
-                            <h3 class="card-title mx-auto my-auto text-success fw-bold"><?php echo $i+1 ?></h3>
-                        <?php
-                        }
-                        ?>
+            <h2 class="caja__subtitulo text-center">PLATOS MÁS CONSUMIDOS</h2>
+            <?php
+                while ($item = mysqli_fetch_assoc ($resultado)) {
+            ?>
+                <div class="card my-3 text-center w-50 mx-auto row">
+                    <div class="d-flex flex-row align-items-center">
+                    <img src="../core/mostrarImagen.php?id=<?php echo $item["idItem"] ?>" class="img-fluid p-4 " style="width: 300px; height: 171px;">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $item["nombre"] ?></h5>
+                        <p class="card-text">Cantidad: <?php echo $item["cantidad"] ?></p>
+                        <p class="card-text">Precio: $ <?php echo $item["precio"] ?></p>
                     </div>
+                    </div>
+                </div>
+            <?php
+                }
+            ?>
+            <div class="d-flex justify-content-end">
+                <a href="#inicio">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="gray" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                    </svg>
                 </a>
-                <?php
-                    }
-                ?>
             </div>
         </section>
     </main>
+    <script src="../js/detalle-mesa.js"></script>
     <!-- Bootstrap // JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>

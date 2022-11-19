@@ -14,8 +14,7 @@ if (isset($_SESSION['usuario'])){
     header('Location: '. direccionBase .'pages/login.php');
 }
 
-include("../core/consultasCaja/cierreDeMesa.php");
-include("../core/consultasCaja/tienePedidosLaMesa.php");
+include("../core/estadisticas/mozosMasVendieron.php");
 
 ?>
 
@@ -67,58 +66,31 @@ include("../core/consultasCaja/tienePedidosLaMesa.php");
                 </div>
             </article>
         </section>
-        <section class="bar__pedidos container my-3">
-            <div class="row mb-5">
-                <div class="col-3 mx-auto">
-                    <a href="EstadisticaPlatos.php" class="btn btn-outline-primary mx-2 shadow-none">Platos más consumidos</a>
-                </div>
-                <div class="col-3 mx-auto">
-                    <a href="estadisticaMozos.php" class="btn btn-outline-primary mx-2 shadow-none">Mozos que más vendieron</a>
-                </div>
-                <div class="col-3 mx-auto">
-                    <a href="caja.php" class="btn btn-outline-primary mx-2 shadow-none">Listado de mesas cerradas</a>
-                </div>
-            </div>
-            <h2 class="caja__subtitulo text-center">MESAS</h2>
-            <div class="row my-3 text-center">
+        <section class="cocina__pedidos container container my-3">
+            <h2 class="caja__subtitulo text-center">Mozos que más vendieron</h2>
                 <?php
-                    if (isset($resultadoUpdate)) {
+                    $i = 1;
+                    while ($mozo = mysqli_fetch_assoc ($resultado)) {
                 ?>
-                        <div class="btn btn-success w-75 mx-auto disabled"><?php echo $resultadoUpdate ?></div>
-                <?php
-                        unset($resultadoUpdate);
-                    }
-                    if (isset($error)) {
-                ?>
-                        <div class="btn btn-danger w-75 mx-auto disabled"><?php echo $error ?></div>
-                <?php
-                    unset($error);
-                    }
-                ?>
-            </div>
-            <div class="row">
-                <?php
-                    for ($i=0; $i<12;$i++) {
-                ?>
-                <a href="detalle-mesa.php?nromesa=<?php echo $i+1 ?>" class="col-3 py-3">
-                    <div class="card card-body">
-                        <?php if ($pedidosMesa[$i] != 0) {
-                        ?>
-                            <h3 class="card-title mx-auto my-auto text-danger fw-bold"><?php echo $i+1 ?></h3>
-                        <?php } else {
-                        ?>
-                            <h3 class="card-title mx-auto my-auto text-success fw-bold"><?php echo $i+1 ?></h3>
-                        <?php
-                        }
-                        ?>
+                <div class="card my-3 text-center w-50 mx-auto row">
+                    <div class="d-flex flex-row align-items-center">
+                    <img src="../resources/premio<?php echo $i++ ?>.png" class="img-fluid p-4 " style="width: 200px; height: 200px;">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $mozo['nombre']. " " . $mozo['apellido']?></h5>
+                        <p class="card-text">Cantidad: <?php echo $mozo['cantidad'] ?></p>
                     </div>
-                </a>
+                    </div>
+                </div>
                 <?php
                     }
+                    unset($i);
                 ?>
+            <div class="d-flex justify-content-end w-75">
+                <a href="caja.php" class="btn btn-outline-secondary mx-2 shadow-none">Volver</a>
             </div>
         </section>
     </main>
+    <script src="../js/detalle-mesa.js"></script>
     <!-- Bootstrap // JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>

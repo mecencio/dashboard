@@ -1,17 +1,17 @@
 <?php 
-include("../core/funciones.php");
 Include("../core/const.php");
 Include("../core/conexion.php");
+Include("../core/objetos.php");
 
 $link = conectar();
 session_start();
 
-if (isset($_SESSION['usuarioLogueado']['rol'])){
-    if ($_SESSION['usuarioLogueado']['rol'] != "COCINERO") {
-        verificarRol($_SESSION['usuarioLogueado']['rol']);
+if (isset($_SESSION['usuario'])){
+    if ($_SESSION['usuario']->getRol() != "COCINERO") {
+        $_SESSION['usuario']->verificarRol();
     };
 } else {
-    verificarRol("");
+    header('Location: '. direccionBase .'pages/login.php');
 }
 
 include("../core/consultasCocinaBar/marcarEntregado.php");
@@ -49,7 +49,7 @@ include("../core/consultasCocinaBar/consultaPedidos.php");
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle usuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hola, <?php echo $_SESSION['usuarioLogueado']['nombre'];  ?>
+                                Hola, <?php echo $_SESSION['usuario']->getNombre();  ?>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/dashboard/core/logout.php">Salir</a></li>

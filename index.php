@@ -1,20 +1,20 @@
 <?php 
 
-include("core/funciones.php");
 Include("core/const.php");
 Include("core/conexion.php");
+Include("core/objetos.php");
 
 
 $link = conectar();
 
 session_start();
 
-if (isset($_SESSION['usuarioLogueado']['rol'])){
-    if ($_SESSION['usuarioLogueado']['rol'] != "MOZO") {
-        verificarRol($_SESSION['usuarioLogueado']['rol']);
+if (isset($_SESSION['usuario'])){
+    if ($_SESSION['usuario']->getRol() != "MOZO") {
+        $_SESSION['usuario']->verificarRol();
     };
 } else {
-    verificarRol("");
+    header('Location: '. direccionBase .'pages/login.php');
 }
 
 include("core/consultasIndex/menu.php");
@@ -52,7 +52,7 @@ include("core/consultasIndex/creacionPedido.php");
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle usuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hola, <?php echo $_SESSION['usuarioLogueado']['nombre'];  ?>
+                                Hola, <?php echo $_SESSION['usuario']->getNombre();  ?>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/dashboard/core/logout.php">Salir</a></li>
@@ -126,7 +126,7 @@ include("core/consultasIndex/creacionPedido.php");
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Usuario del mozo: </label>
-                    <input type="text" class="form-control form__mozo" value="<?php echo ($_SESSION['usuarioLogueado']['nombreusuario']);  ?>" name="mozo" readonly>
+                    <input type="text" class="form-control form__mozo" value="<?php echo ($_SESSION['usuario']->getUsuario());  ?>" name="mozo" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Ingrese el número de mesa: </label>
