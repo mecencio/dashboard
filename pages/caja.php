@@ -76,7 +76,7 @@ include("../core/consultasCaja/tienePedidosLaMesa.php");
                     <a href="estadisticaMozos.php" class="btn btn-outline-primary mx-2 shadow-none">Mozos que más vendieron</a>
                 </div>
                 <div class="col-3 mx-auto">
-                    <a href="caja.php" class="btn btn-outline-primary mx-2 shadow-none">Listado de mesas cerradas</a>
+                    <a href="historicoMesasCerradas.php" class="btn btn-outline-primary mx-2 shadow-none">Listado de mesas cerradas</a>
                 </div>
             </div>
             <h2 class="caja__subtitulo text-center">MESAS</h2>

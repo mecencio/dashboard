@@ -133,7 +133,7 @@ include("../core/consultasCocinaBar/consultaPedidos.php");
                 ?>
                 <!-- Boton next -->
                 <!-- PHP de adentro : En caso de que estemos viendo la última página desactiva el boton (porque no hay página siguiente) -->
-                <li class="page-item <?php echo ((isset($_GET["inicio"]) && ($_GET["inicio"] != (5*($paginas-1)))) || ($paginas == 1))? 'disabled':''; ?>">
+                <li class="page-item <?php echo ((isset($_GET["inicio"]) && ($_GET["inicio"] == (5*($paginas-1)))) || ($paginas <= 1))? 'disabled':''; ?>">
                     <!-- PHP de adentro: setea la página siguiente sumandole 5 al dato pasado por GET (Si existiera, sino lo define en 6)-->
                     <a class="page-link" href="cocina.php?inicio=<?php echo isset($_GET["inicio"])?$_GET["inicio"]+5:5; ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>

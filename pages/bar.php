@@ -89,14 +89,14 @@ include("../core/consultasCocinaBar/consultaPedidos.php");
             </div>
             <div class="card my-3 text-center w-50 mx-auto row">
                 <div class="d-flex flex-row align-items-center">
-                <img src="../core/mostrarImagen.php?id=<?php echo $pedido["idItem"] ?>" class="p-4 " style="width: 300px; height: 171px;">
-                <div class="card-body">
-                    <h5 class="card-title"><?php echo $pedido["item"] ?></h5>
-                    <p class="card-text">Comentarios: <?php echo $pedido["comentario"] ?> </p>
-                    <p class="card-text">Mozo: <?php echo $pedido["nombre"] ?> <?php echo $pedido["apellido"] ?></p>
-                    <p class="card-text">Mesa: <?php echo $pedido["mesa"] ?></p>
-                    <a href="bar.php?id=<?php echo $pedido["id"] ?>" class="btn btn-outline-primary">Entregado</a>
-                </div>
+                    <img src="../core/mostrarImagen.php?id=<?php echo $pedido["idItem"] ?>" class="p-4 " style="width: 300px; height: 171px;">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $pedido["item"] ?></h5>
+                        <p class="card-text">Comentarios: <?php echo $pedido["comentario"] ?> </p>
+                        <p class="card-text">Mozo: <?php echo $pedido["nombre"] ?> <?php echo $pedido["apellido"] ?></p>
+                        <p class="card-text">Mesa: <?php echo $pedido["mesa"] ?></p>
+                        <a href="bar.php?id=<?php echo $pedido["id"] ?>" class="btn btn-outline-primary">Entregado</a>
+                    </div>
                 </div>
                 <div class="card-footer text-muted">
                     <p class="my-1">Fecha y hora: <?php echo $pedido["fecha"] ?></p>
@@ -133,7 +133,7 @@ include("../core/consultasCocinaBar/consultaPedidos.php");
                 ?>
                 <!-- Boton next -->
                 <!-- PHP de adentro : En caso de que estemos viendo la última página desactiva el boton (porque no hay página siguiente) -->
-                <li class="page-item <?php echo ((isset($_GET["inicio"]) && ($_GET["inicio"] != (5*($paginas-1)))) || ($paginas == 1))? 'disabled':''; ?>">
+                <li class="page-item <?php echo ((isset($_GET["inicio"]) && ($_GET["inicio"] == (5*($paginas-1)))) || ($paginas <= 1))? 'disabled':''; ?>">
                     <!-- PHP de adentro: setea la página siguiente sumandole 5 al dato pasado por GET (Si existiera, sino lo define en 6)-->
                     <a class="page-link" href="bar.php?inicio=<?php echo isset($_GET["inicio"])?$_GET["inicio"]+5:5; ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>

@@ -40,4 +40,5 @@ VALUES (NULL, 'Jarra de limonada 1 lt', '550', 'BEBIDA', 0xffd8ffe000104a4649460
 
 INSERT INTO usuarios (id, nombreusuario, clave, rol, apellido, nombre) 
 VALUES (NULL, 'sgimenez', 'gimenez1234', 'MOZO', 'Gimenez', 'Susana'), 
+(NULL, 'dotero', 'otero1234', 'CAJERO', 'Otero', 'Daniela'), 
 (NULL, 'vcordoba', 'cordoba1234', 'MOZO', 'Cordoba', 'Vanina');
