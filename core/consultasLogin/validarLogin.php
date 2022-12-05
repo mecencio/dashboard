@@ -12,30 +12,18 @@ if (isset($_POST["usuario"]) && isset($_POST["contrasenia"])) {
     $contrasenia=$_POST['contrasenia']; // Copio el dato de la contraseña ingresada en una variable
 
     $errores = array (); // Creo un array para almacenar los errores
-
-    // Corroboro que los datos ingresados cumplan las especificaciones:
-        // - Usuario caracteres alfanuméricos únicamente y 6 o más carácteres.
-        // - Contraseña 6 o más carácteres
-    $datosValidos = (strlen($usuario) >= 6) && (ctype_alnum($usuario)) && (strlen($contrasenia) >= 6);
     
-    // Si se cumplen las especificaciones
-    if ($datosValidos) {
-        $consulta="SELECT * FROM usuarios where nombreusuario = '$usuario' "; 
-        $resultado=mysqli_query($link,$consulta); // Realizo consulta para buscar si el usuario existe en la tabla
-        $row = mysqli_fetch_array ($resultado);  // Guardo en resultados en array
-        $filas = mysqli_num_rows($resultado); // Guardo la cantidad de filas que dieron como resultado
+    $_SESSION["usuario"] = new Usuario();
 
-        // Como el usuario no se puede repetir la cantidad de resultados debería ser 1 o 0
-        // Si hay filas y la contaseña ingresada coincide con la que arrojó la consulta
-        if ($filas && $contrasenia == $row['clave']) {
-            $_SESSION["usuario"] = new Usuario($row['id'], $row['nombre'], $row['apellido'], $row['rol'], $row['nombreusuario'], $row['clave']);
+    // Si se cumplen las especificaciones
+    if ($_SESSION["usuario"]->validarDatos($usuario, $contrasenia)) {
+
+        if ($_SESSION["usuario"]->autenticar($usuario, $contrasenia, $link)) {
             $_SESSION["usuario"]->verificarRol(); // Utilizo la función verificar para que lo dirija a la página que corresponda.
         } else {
             // Sino arroja resultados o la contraseña no coincide devuelve el error.
             array_push($errores, "* El usuario o la contraseña ingresado es incorrecto.");
         }
-
-        mysqli_free_result($resultado);
 
     } else {
         // Validar usuario mayor 6 carácteres y guardo mensaje de error si es necesario

@@ -1,5 +1,9 @@
 <?php 
+Include("../core/const.php");
+Include("../core/conexion.php");
+Include("../core/objetos.php");
 
+$link = conectar();
 session_start();
 
 if (isset($_SESSION['usuario'])){
