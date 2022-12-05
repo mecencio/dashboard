@@ -1,9 +1,6 @@
 <?php
 
 if (isset($_POST["usuario"]) && isset($_POST["contrasenia"])) {
-    include("../core/const.php");
-    Include("../core/conexion.php");
-    include("../core/objetos.php");
 
     $link = conectar();
 
