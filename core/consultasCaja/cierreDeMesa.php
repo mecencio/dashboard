@@ -23,7 +23,7 @@ if (isset($_POST["nromesa"]) && isset($_POST["idCajero"]) && isset($_POST["monto
         $idCierre = mysqli_insert_id($link); // Almaceno el ID del insert que se realizó
 
         // Actualizo todos los pedidos de la mesa para que idCierre sea igual al cierre creado
-        $consultaUpdate = "UPDATE `pedidos` SET `idCierreDeMesa` = '$idCierre' WHERE (`pedidos`.`nromesa` = '$mesa') AND (`pedidos`.`idCierreDeMesa` IS NULL)";
+        $consultaUpdate = "UPDATE `pedidos` SET `idCierreDeMesa` = '$idCierre', `entregado` = 1 WHERE (`pedidos`.`nromesa` = '$mesa') AND (`pedidos`.`idCierreDeMesa` IS NULL)";
         $resultado = mysqli_query($link,$consultaUpdate);
         
         if(!($resultado)) { // Si el UPDATE se realiza correctamente.

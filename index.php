@@ -131,18 +131,10 @@ include("core/consultasIndex/creacionPedido.php");
                 <div class="mb-3">
                     <label class="form-label">Ingrese el número de mesa: </label>
                     <select class="form-select" name="mesa">
-                        <option value="1">01</option>
-                        <option value="2">02</option>
-                        <option value="3">03</option>
-                        <option value="4">04</option>
-                        <option value="5">05</option>
-                        <option value="6">06</option>
-                        <option value="7">07</option>
-                        <option value="8">08</option>
-                        <option value="9">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
+                        <?php for ($i = 1 ; $i<=12; $i++) {
+                        ?>
+                        <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                        <?php } ?>
                     </select>
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
